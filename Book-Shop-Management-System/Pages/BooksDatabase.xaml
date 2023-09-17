@@ -1,0 +1,53 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.BooksDatabase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BooksDatabase">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".08*"></RowDefinition>
+            <RowDefinition Height=".92*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
+            <StackPanel>
+                <TextBlock Text="Books Database" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="Books" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                  Header="Book ID"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding BookID}"/>
+                <DataGridTextColumn
+                  Header="Book Name"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding BookName}"/>
+                <DataGridTextColumn
+                  Header="Book Author"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding BookAuthor}"/>
+                <DataGridTextColumn
+                  Header="Book Price"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding BookPrice}"/>
+                <DataGridTextColumn
+                  Header="Book Quantity"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding BookQuantity}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

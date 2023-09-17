@@ -1,0 +1,78 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.MembersDatabase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MembersDatabase">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".08*"></RowDefinition>
+            <RowDefinition Height=".92*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
+            <StackPanel>
+                <TextBlock Text="Members Database" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="Members" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                  Header="Member ID"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberID}"/>
+                <DataGridTextColumn
+                  Header="Member Name"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberName}"/>
+                <DataGridTextColumn
+                  Header="Member Address Line 1"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberAddressLine1}"/>
+                <DataGridTextColumn
+                  Header="Member Address Line 2"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberAddressLine2}"/>
+                <DataGridTextColumn
+                  Header="Member Address City"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberAddressCity}"/>
+                <DataGridTextColumn
+                  Header="Member Address State"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberAddressState}"/>
+                <DataGridTextColumn
+                  Header="Member Phone"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberPhone}"/>
+                <DataGridTextColumn
+                  Header="Membership End Date"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberEndDate}"/>
+                <DataGridTextColumn
+                  Header="Membership Begin Date"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberBeginDate}"/>
+                <DataGridTextColumn
+                  Header="Member Valid"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding MemberValid}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

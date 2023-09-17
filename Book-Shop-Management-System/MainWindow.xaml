@@ -1,0 +1,30 @@
+﻿<Window x:Class="Book_Shop_Management_System.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Book_Shop_Management_System"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        ResizeMode="CanMinimize"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10, 0, 10, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".03*"></RowDefinition>
+            <RowDefinition Height=".97*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Menu x:Name="navbar" Grid.Row="0">
+            <MenuItem x:Name="books_database_button" Header="Books" Click="switch_page"/>
+            <MenuItem x:Name="suppliers_database_button" Header="Suppliers" Click="switch_page"/>
+            <MenuItem x:Name="purchases_database_button" Header="Purchases" Click="switch_page"/>
+            <MenuItem x:Name="employees_database_button" Header="Employees" Click="switch_page"/>
+            <MenuItem x:Name="members_database_button" Header="Members" Click="switch_page"/>
+            <MenuItem x:Name="sales_database_button" Header="Sales" Click="switch_page"/>
+        </Menu>
+
+        <!-- Frame to host pages -->
+        <Frame Grid.Row="1" Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,63 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.SuppliersDatabase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SuppliersDatabase">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".08*"></RowDefinition>
+            <RowDefinition Height=".92*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
+            <StackPanel>
+                <TextBlock Text="Suppliers Database" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="Suppliers" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                  Header="Supplier ID"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierID}"/>
+                <DataGridTextColumn
+                  Header="Supplier Name"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierName}"/>
+                <DataGridTextColumn
+                  Header="Supplier Phone"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierPhone}"/>
+                <DataGridTextColumn
+                  Header="Supplier Address Line 1"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierAddressLine1}"/>
+                <DataGridTextColumn
+                  Header="Supplier Address Line 2"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierAddressLine2}"/>
+                <DataGridTextColumn
+                  Header="Supplier City"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierCity}"/>
+                <DataGridTextColumn
+                  Header="Supplier State"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding SupplierState}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

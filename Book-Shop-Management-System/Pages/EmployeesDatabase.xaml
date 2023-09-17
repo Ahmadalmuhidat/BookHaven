@@ -1,0 +1,78 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.EmployeesDatabase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EmployeesDatabase">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".08*"></RowDefinition>
+            <RowDefinition Height=".92*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
+            <StackPanel>
+                <TextBlock Text="Employees Database" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="Employees" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                  Header="Employee ID"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeID}"/>
+                <DataGridTextColumn
+                  Header="Employee Name"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeName}"/>
+                <DataGridTextColumn
+                  Header="Employee Adress Line 1"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeAdressLine1}"/>
+                <DataGridTextColumn
+                  Header="Employee Adress Line 2"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeAdressLine2}"/>
+                <DataGridTextColumn
+                  Header="Employee Adress City"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeAdressCity}"/>
+                <DataGridTextColumn
+                  Header="Employee Adress State"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeAdressState}"/>
+                <DataGridTextColumn
+                  Header="Employee Phone"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeePhone}"/>
+                <DataGridTextColumn
+                  Header="Employee Date Of Joining"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeDateOfJoining}"/>
+                <DataGridTextColumn
+                  Header="Employee Salary"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeSalary}"/>
+                <DataGridTextColumn
+                  Header="Employee MGR Status"
+                  MinWidth="150"
+                  Width="*"
+                  Binding="{Binding EmployeeMGRStatus}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
