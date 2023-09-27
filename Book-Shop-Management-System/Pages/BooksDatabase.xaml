@@ -11,7 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".08*"></RowDefinition>
-            <RowDefinition Height=".92*"></RowDefinition>
+            <RowDefinition Height=".05*"></RowDefinition>
+            <RowDefinition Height=".87*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
@@ -20,33 +21,46 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="Books" Grid.Row="2">
+        <StackPanel x:Name="table_actions" Grid.Row="1" Margin="0, 0, 0, 10" Orientation="Horizontal">
+            <Button x:Name="search_button" Content="Search" Width="100"></Button>
+            <TextBox x:Name="search_input" Width="300"/>
+            <Button x:Name="delete_button" Content="Delete Selected" Width="100" Margin="20,0,0,0"></Button>
+        </StackPanel>
+
+        <DataGrid x:Name="books_table" Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Book ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding BookID}"/>
                 <DataGridTextColumn
-                  Header="Book Name"
-                  MinWidth="150"
+                  Header="Name"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding BookName}"/>
                 <DataGridTextColumn
-                  Header="Book Author"
-                  MinWidth="150"
+                  Header="Author"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding BookAuthor}"/>
                 <DataGridTextColumn
-                  Header="Book Price"
-                  MinWidth="150"
+                  Header="Price"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding BookPrice}"/>
                 <DataGridTextColumn
-                  Header="Book Quantity"
-                  MinWidth="150"
+                  Header="Quantity"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding BookQuantity}"/>
+                <DataGridTemplateColumn Header="Actions" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Navigate" Click="goToBookProfile" CommandParameter="{Binding ButtonBookID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

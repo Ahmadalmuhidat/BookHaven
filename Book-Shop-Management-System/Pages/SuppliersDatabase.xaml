@@ -20,43 +20,55 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="Suppliers" Grid.Row="2">
+        <DataGrid x:Name="suppliers_table" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Supplier ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SupplierID}"/>
                 <DataGridTextColumn
-                  Header="Supplier Name"
-                  MinWidth="150"
+                  Header="Full Name"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding SupplierName}"/>
+                  Binding="{Binding SupplierFullName}"/>
                 <DataGridTextColumn
-                  Header="Supplier Phone"
-                  MinWidth="150"
+                  Header="Phone Number"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding SupplierPhone}"/>
+                  Binding="{Binding SupplierPhoneNumber}"/>
                 <DataGridTextColumn
-                  Header="Supplier Address Line 1"
-                  MinWidth="150"
+                  Header="Address Line 1"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SupplierAddressLine1}"/>
                 <DataGridTextColumn
-                  Header="Supplier Address Line 2"
-                  MinWidth="150"
+                  Header="Address Line 2"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SupplierAddressLine2}"/>
                 <DataGridTextColumn
-                  Header="Supplier City"
-                  MinWidth="150"
+                  Header="City"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SupplierCity}"/>
                 <DataGridTextColumn
-                  Header="Supplier State"
-                  MinWidth="150"
+                  Header="State"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SupplierState}"/>
+                <DataGridTextColumn
+                  Header="Creation Date"
+                  MinWidth="80"
+                  Width="*"
+                  Binding="{Binding SupplierCreationDate}"/>
+                <DataGridTemplateColumn Header="Actions" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Navigate" Click="goToSupplierProfile" CommandParameter="{Binding ButtonSupplierID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

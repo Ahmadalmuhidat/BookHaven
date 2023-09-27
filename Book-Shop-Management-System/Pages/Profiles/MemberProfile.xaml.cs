@@ -14,29 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Book_Shop_Management_System.Pages
+namespace Book_Shop_Management_System.Pages.Profiles
 {
-    public partial class SalesDatabase : Page
+    public class dSalesDataItem
     {
-        public class SalesDataItem
-        {
-            public string SaleID { get; set; }
-            public string SaleInvoiceID { get; set; }
-            public string SaleMemberID { get; set; }
-            public string SaleBookID { get; set; }
-            public string SaleQuantity { get; set; }
-            public string SaleAmount { get; set; }
-            public string SaleDate { get; set; }
-            public string SaleEmployee { get; set; }
-        }
+        public string SaleID { get; set; }
+        public string SaleInvoiceID { get; set; }
+        public string SaleMemberID { get; set; }
+        public string SaleBookID { get; set; }
+        public string SaleQuantity { get; set; }
+        public string SaleAmount { get; set; }
+        public string SaleDate { get; set; }
+    }
 
-        public SalesDatabase()
+    public partial class MemberProfile : Page
+    {
+        public MemberProfile(string EID)
         {
             InitializeComponent();
-            mysql();
+            getInfo(EID);
+            getSales(EID);
         }
 
-        private void mysql()
+        public void getInfo(string EID)
         {
             try
             {
@@ -46,23 +46,13 @@ namespace Book_Shop_Management_System.Pages
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from sales";
-                        // cmd.Parameters.AddWithValue("@ID", "100");
+                        cmd.CommandText = "select * from employees WHERE EmployeeID=@param1";
+                        cmd.Parameters.AddWithValue("@param1", EID);
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Sales.Items.Add(new SalesDataItem
-                                {
-                                    SaleID = reader["SaleID"].ToString(),
-                                    SaleInvoiceID = reader["SaleInvoiceID"].ToString(),
-                                    SaleMemberID = reader["SaleMemberID"].ToString(),
-                                    SaleBookID = reader["SaleBookID"].ToString(),
-                                    SaleQuantity = reader["SaleQuantity"].ToString(),
-                                    SaleAmount = reader["SaleAmount"].ToString(),
-                                    SaleDate = reader["SaleDate"].ToString(),
-                                    SaleEmployee = reader["SaleEmployeeID"].ToString(),
-                                });
+
                             }
                         }
                     }
@@ -74,5 +64,41 @@ namespace Book_Shop_Management_System.Pages
             }
         }
 
+        public void getSales(string EID)
+        {
+            try
+            {
+                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
+                using (var conn = new MySqlConnection(connstr))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "select * from sales WHERE SaleEmployeeID=@param1";
+                        cmd.Parameters.AddWithValue("@param1", EID);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Sales.Items.Add(new dSalesDataItem
+                                {
+                                    SaleID = reader["SaleID"].ToString(),
+                                    SaleInvoiceID = reader["SaleInvoiceID"].ToString(),
+                                    SaleMemberID = reader["SaleMemberID"].ToString(),
+                                    SaleBookID = reader["SaleBookID"].ToString(),
+                                    SaleQuantity = reader["SaleQuantity"].ToString(),
+                                    SaleAmount = reader["SaleAmount"].ToString(),
+                                    SaleDate = reader["SaleDate"].ToString(),
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }

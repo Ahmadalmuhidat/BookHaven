@@ -20,41 +20,46 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="Sales" Grid.Row="2">
+        <DataGrid x:Name="Sales" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Sale ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleID}"/>
                 <DataGridTextColumn
                   Header="Invoice ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleInvoiceID}"/>
                 <DataGridTextColumn
                   Header="Member ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleMemberID}"/>
                 <DataGridTextColumn
                   Header="Book ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleBookID}"/>
                 <DataGridTextColumn
                   Header="Quantiy"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding SaleQuantiy}"/>
+                  Binding="{Binding SaleQuantity}"/>
                 <DataGridTextColumn
                   Header="Amount"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleAmount}"/>
                 <DataGridTextColumn
+                  Header="Employee"
+                  MinWidth="80"
+                  Width="*"
+                  Binding="{Binding SaleEmployee}"/>
+                <DataGridTextColumn
                   Header="Sale date"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding SaleDate}"/>
             </DataGrid.Columns>

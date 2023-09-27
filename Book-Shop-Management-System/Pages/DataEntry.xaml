@@ -1,0 +1,45 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.DataEntry"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages"
+      xmlns:UserControls="clr-namespace:Book_Shop_Management_System.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DataEntry">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".08*"></RowDefinition>
+            <RowDefinition Height=".10*"></RowDefinition>
+            <RowDefinition Height=".82*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="1" DockPanel.Dock="Top" Margin="0, 10, 0, 10">
+            <StackPanel>
+                <TextBlock Text="Data Entry" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="Please choose the entry type" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="NewBook" Content="New Book" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                    <CheckBox x:Name="NewEmployee" Content="New Employee" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                    <CheckBox x:Name="NewMember" Content="New Member" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                    <CheckBox x:Name="NewPurchase" Content="New Purchase" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                    <CheckBox x:Name="NewSale" Content="New Sale" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                    <CheckBox x:Name="NewSupplier" Content="New Supplier" Margin="10" FontWeight="Bold" Click="switch_frame"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <UserControls:BookDataEntry Grid.Row="2" x:Name="BookEntryFrame" Visibility="Collapsed" />
+        <UserControls:EmployeeDataEntry Grid.Row="2" x:Name="EmployeeEntryFrame" Visibility="Collapsed" />
+        <UserControls:MemberDataEntry Grid.Row="2" x:Name="MemberEntryFrame" Visibility="Collapsed" />
+        <UserControls:PurchaseDataEntry Grid.Row="2" x:Name="PurchaseEntryFrame" Visibility="Collapsed" />
+        <UserControls:SaleDataEntry Grid.Row="2" x:Name="SaleEntryFrame" Visibility="Collapsed" />
+        <UserControls:SupplierDataEntry Grid.Row="2" x:Name="SupplierEntryFrame" Visibility="Collapsed" />
+    </Grid>
+</Page>

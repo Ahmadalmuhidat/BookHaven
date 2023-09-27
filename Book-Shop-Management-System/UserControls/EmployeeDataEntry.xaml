@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Book_Shop_Management_System.UserControls.EmployeeDataEntry"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Book_Shop_Management_System.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 0, 0 10">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="New Employee Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
+                <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
+                    <TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                <ColumnDefinition Width=".80*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <Label Grid.Column="0" Content="Employee Image" FontWeight="Bold"/>
+                        <Button Content="Select Image" Click="SelectImage_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" />
+                        <Image x:Name="imagePreview" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" />  
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".30*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".70*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee ID" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeID" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".30*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".70*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Full Name" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeFullName" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Adress Line 1" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeAdressLine1" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Adress Line 2" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeAdressLine2" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Adress City" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeAdressCity" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                <ColumnDefinition Width=".80*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <Label Grid.Column="0" Content="Employee Adress State" FontWeight="Bold"/>
+                        <TextBox x:Name="EmployeeAdressState" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Phone Number" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeePhoneNumber" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Date Of Joining" FontWeight="Bold"/>
+                          <DatePicker x:Name="EmployeeDateOfJoining" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee Salary" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeSalary" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Grid>
+                              <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width=".20*"></ColumnDefinition>
+                                  <ColumnDefinition Width=".80*"></ColumnDefinition>
+                              </Grid.ColumnDefinitions>
+                          </Grid>
+                          <Label Grid.Column="0" Content="Employee MGR Status" FontWeight="Bold"/>
+                          <TextBox x:Name="EmployeeMGRStatus" Grid.Column="1" Width="300"/>
+                    </TextBlock>
+                    <TextBlock>
+                          <Button Content="submit" Click="submit" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

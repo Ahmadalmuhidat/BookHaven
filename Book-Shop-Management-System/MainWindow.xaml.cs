@@ -14,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Book_Shop_Management_System
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        public NavigationService NavigationService { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            NavigationService = ContentFrame.NavigationService;
             books_database_button.IsChecked = true;
             ContentFrame.Content = new BooksDatabase();
         }
@@ -43,6 +44,7 @@ namespace Book_Shop_Management_System
             employees_database_button.IsChecked = false;
             members_database_button.IsChecked = false;
             sales_database_button.IsChecked = false;
+            data_entry_button.IsChecked = false;
 
             menuItem.IsChecked = true;
 
@@ -69,6 +71,10 @@ namespace Book_Shop_Management_System
             else if (menuItem == sales_database_button)
             {
                 ContentFrame.Content = new SalesDatabase();
+            }
+            else if (menuItem == data_entry_button)
+            {
+                ContentFrame.Content = new DataEntry();
             }
         }
     }

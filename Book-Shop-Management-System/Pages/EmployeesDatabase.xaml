@@ -24,54 +24,61 @@
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Employee ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeID}"/>
                 <DataGridTextColumn
-                  Header="Employee Name"
-                  MinWidth="150"
+                  Header="Full Name"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding EmployeeName}"/>
+                  Binding="{Binding EmployeeFullName}"/>
                 <DataGridTextColumn
-                  Header="Employee Adress Line 1"
-                  MinWidth="150"
+                  Header="Adress Line 1"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeAdressLine1}"/>
                 <DataGridTextColumn
-                  Header="Employee Adress Line 2"
-                  MinWidth="150"
+                  Header="Adress Line 2"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeAdressLine2}"/>
                 <DataGridTextColumn
-                  Header="Employee Adress City"
-                  MinWidth="150"
+                  Header="Adress City"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeAdressCity}"/>
                 <DataGridTextColumn
-                  Header="Employee Adress State"
-                  MinWidth="150"
+                  Header="Adress State"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeAdressState}"/>
                 <DataGridTextColumn
-                  Header="Employee Phone"
-                  MinWidth="150"
+                  Header="Phone Number"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding EmployeePhone}"/>
+                  Binding="{Binding EmployeePhoneNumber}"/>
                 <DataGridTextColumn
-                  Header="Employee Date Of Joining"
-                  MinWidth="150"
+                  Header="Date Of Joining"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeDateOfJoining}"/>
                 <DataGridTextColumn
-                  Header="Employee Salary"
-                  MinWidth="150"
+                  Header="Salary"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeSalary}"/>
                 <DataGridTextColumn
-                  Header="Employee MGR Status"
-                  MinWidth="150"
+                  Header="MGR Status"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding EmployeeMGRStatus}"/>
+                <DataGridTemplateColumn Header="Actions" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Navigate" Click="goToEmployeeProfile" CommandParameter="{Binding ButtonEmployeeID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

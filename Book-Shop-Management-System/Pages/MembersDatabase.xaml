@@ -20,43 +20,43 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="Members" Grid.Row="2">
+        <DataGrid x:Name="Members" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Member ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding MemberID}"/>
                 <DataGridTextColumn
-                  Header="Member Name"
-                  MinWidth="150"
+                  Header="Full Name"
+                  MinWidth="80"
                   Width="*"
-                  Binding="{Binding MemberName}"/>
+                  Binding="{Binding MemberFullName}"/>
                 <DataGridTextColumn
-                  Header="Member Address Line 1"
-                  MinWidth="150"
+                  Header="Address Line 1"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding MemberAddressLine1}"/>
                 <DataGridTextColumn
-                  Header="Member Address Line 2"
-                  MinWidth="150"
+                  Header="Address Line 2"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding MemberAddressLine2}"/>
                 <DataGridTextColumn
-                  Header="Member Address City"
-                  MinWidth="150"
+                  Header="Address City"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding MemberAddressCity}"/>
                 <DataGridTextColumn
-                  Header="Member Address State"
-                  MinWidth="150"
+                  Header="Address State"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding MemberAddressState}"/>
                 <DataGridTextColumn
-                  Header="Member Phone"
+                  Header="Phone Number"
                   MinWidth="150"
                   Width="*"
-                  Binding="{Binding MemberPhone}"/>
+                  Binding="{Binding MemberPhoneNumber}"/>
                 <DataGridTextColumn
                   Header="Membership End Date"
                   MinWidth="150"
@@ -68,10 +68,17 @@
                   Width="*"
                   Binding="{Binding MemberBeginDate}"/>
                 <DataGridTextColumn
-                  Header="Member Valid"
+                  Header="Valid"
                   MinWidth="150"
                   Width="*"
                   Binding="{Binding MemberValid}"/>
+                <DataGridTemplateColumn Header="Actions" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Navigate" Click="goToMemberProfile" CommandParameter="{Binding ButtonMemberID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

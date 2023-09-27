@@ -20,31 +20,31 @@
             </StackPanel>
         </Border>
 
-        <DataGrid x:Name="Purchases" Grid.Row="2">
+        <DataGrid x:Name="Purchases" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn
                   Header="Purchase ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseID}"/>
                 <DataGridTextColumn
                   Header="Book ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseBookID}"/>
                 <DataGridTextColumn
                   Header="Supplier ID"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseSupplierID}"/>
                 <DataGridTextColumn
                   Header="Quantity"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseQuantity}"/>
                 <DataGridTextColumn
                   Header="Purchase Date"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseDate}"/>
                 <DataGridTextColumn
@@ -54,12 +54,12 @@
                   Binding="{Binding PurchaseETA}"/>
                 <DataGridTextColumn
                   Header="Received"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseReceived}"/>
                 <DataGridTextColumn
                   Header="Invoice"
-                  MinWidth="150"
+                  MinWidth="80"
                   Width="*"
                   Binding="{Binding PurchaseInvoice}"/>
             </DataGrid.Columns>

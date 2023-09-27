@@ -8,4 +8,25 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\Profiles\book cover.jpg" />
+    <None Remove="Pages\Profiles\person.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pages\Profiles\book cover.jpg" />
+    <Resource Include="Pages\Profiles\person.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Members Images\" />
+    <Folder Include="Assets\Books Images\" />
+    <Folder Include="Assets\Employees Images\" />
+    <Folder Include="Assets\Suppliers Images\" />
+  </ItemGroup>
+
 </Project>
