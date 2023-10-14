@@ -14,13 +14,11 @@
             <RowDefinition Height=".05*"></RowDefinition>
             <RowDefinition Height=".70*"></RowDefinition>
         </Grid.RowDefinitions>
-
         <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
             <StackPanel>
                 <TextBlock Text="Supplier Deatails" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             </StackPanel>
         </Border>
-
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -28,84 +26,74 @@
                     <ColumnDefinition Width=".30*"></ColumnDefinition>
                     <ColumnDefinition Width=".50*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
                 <StackPanel Grid.Column="0">
                     <Border BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/Pages/Profiles/person.jpg"/>
+                        <Image x:Name="SupplierImage" Width="250" Height="150" Stretch="Fill"/>
                     </Border>
                 </StackPanel>
-
                 <StackPanel Grid.Column="1" Orientation="Vertical">
                     <TextBlock x:Name="SupplierID" Margin="5" TextWrapping="Wrap" FontSize="13"/>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address Line 1:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address Line 2:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address City:</Bold> text
-                    </TextBlock>
+                    <TextBlock x:Name="SupplierFullName" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="SupplierAddressLine1" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="SupplierAddressLine2" Margin="5" TextWrapping="Wrap" FontSize="13"/>
                 </StackPanel>
-
                 <StackPanel Grid.Column="2" Orientation="Vertical">
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Phone Number:</Bold> text
-                    </TextBlock>
+                    <TextBlock x:Name="SupplierPhoneNumber" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="SupplierCity" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="SupplierState" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="SupplierCreateDate" Margin="5" TextWrapping="Wrap" FontSize="13"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
-
         <Border Grid.Row="2" BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
             <StackPanel>
                 <TextBlock Text="Previous Purchases" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             </StackPanel>
         </Border>
-
         <StackPanel Grid.Row="3">
             <StackPanel>
                 <DataGrid x:Name="Purchases">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-               Header="Purchase ID"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseID}"/>
+                           Header="Purchase ID"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseID}"/>
                         <DataGridTextColumn
-               Header="Book ID"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseBookID}"/>
+                           Header="Book ID"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseBookID}"/>
                         <DataGridTextColumn
-               Header="Supplier ID"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseSupplierID}"/>
+                           Header="Supplier ID"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseSupplierID}"/>
                         <DataGridTextColumn
-               Header="Quantity"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseQuantity}"/>
+                           Header="Quantity"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseQuantity}"/>
                         <DataGridTextColumn
-               Header="Purchase Date"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseDate}"/>
+                           Header="Purchase Date"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseDate}"/>
                         <DataGridTextColumn
-               Header="ETA"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseETA}"/>
+                           Header="ETA"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseETA}"/>
                         <DataGridTextColumn
-               Header="Received"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseReceived}"/>
+                           Header="Received"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseReceived}"/>
                         <DataGridTextColumn
-               Header="Invoice"
-               MinWidth="150"
-               Width="*"
-               Binding="{Binding PurchaseInvoice}"/>
+                           Header="Invoice"
+                           MinWidth="150"
+                           Width="*"
+                           Binding="{Binding PurchaseInvoice}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

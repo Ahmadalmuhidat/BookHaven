@@ -1,18 +1,9 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Book_Shop_Management_System.UserControls
 {
@@ -24,6 +15,8 @@ namespace Book_Shop_Management_System.UserControls
 
     public partial class SaleDataEntry : UserControl
     {
+        private MySQLConnector DB = new MySQLConnector();
+
         public SaleDataEntry()
         {
             InitializeComponent();
@@ -36,24 +29,16 @@ namespace Book_Shop_Management_System.UserControls
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select EmployeeID, EmployeeFullName from employees";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select EmployeeID, EmployeeFullName from employees";
-                        using (var reader = cmd.ExecuteReader())
+                        SaleEmployee.Items.Add(new SaleComboBoxItem
                         {
-                            while (reader.Read())
-                            {
-                                SaleEmployee.Items.Add(new SaleComboBoxItem
-                                {
-                                    DisplayText = reader["EmployeeFullName"].ToString(),
-                                    Value = reader["EmployeeID"].ToString()
-                                });
-                            }
-                        }
+                            DisplayText = row["EmployeeFullName"].ToString(),
+                            Value = row["EmployeeID"].ToString()
+                        });
                     }
                 }
             }
@@ -67,24 +52,16 @@ namespace Book_Shop_Management_System.UserControls
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select MemberID, MemberFullName from members";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select MemberID, MemberFullName from members";
-                        using (var reader = cmd.ExecuteReader())
+                        SaleMember.Items.Add(new SaleComboBoxItem
                         {
-                            while (reader.Read())
-                            {
-                                SaleMember.Items.Add(new SaleComboBoxItem
-                                {
-                                    DisplayText = reader["MemberFullName"].ToString(),
-                                    Value = reader["MemberID"].ToString()
-                                });
-                            }
-                        }
+                            DisplayText = row["MemberFullName"].ToString(),
+                            Value = row["MemberID"].ToString()
+                        });
                     }
                 }
             }
@@ -98,24 +75,16 @@ namespace Book_Shop_Management_System.UserControls
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select BookID, BookName from books";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select BookID, BookName from books";
-                        using (var reader = cmd.ExecuteReader())
+                        SaleBook.Items.Add(new SaleComboBoxItem
                         {
-                            while (reader.Read())
-                            {
-                                SaleBook.Items.Add(new SaleComboBoxItem
-                                {
-                                    DisplayText = reader["BookName"].ToString(),
-                                    Value = reader["BookID"].ToString()
-                                });
-                            }
-                        }
+                            DisplayText = row["BookName"].ToString(),
+                            Value = row["BookID"].ToString()
+                        });
                     }
                 }
             }
@@ -125,45 +94,69 @@ namespace Book_Shop_Management_System.UserControls
             }
         }
 
-        public void clear()
+        public void clearInputs()
         {
             SaleID.Clear();
             SaleInvoiceID.Clear();
             SaleQuantity.Clear();
             SaleAmount.Clear();
+            SaleMember.SelectedValue = null;
+            SaleBook.SelectedValue = null;
+            SaleEmployee.SelectedValue = null;
+            SaleDate.SelectedDate = null;
+        }
+
+        public bool areInputsNotEmpty()
+        {
+            if (string.IsNullOrWhiteSpace(SaleID.Text) ||
+                string.IsNullOrWhiteSpace(SaleBook.SelectedValue.ToString()) ||
+                string.IsNullOrWhiteSpace(SaleMember.SelectedValue.ToString()) ||
+                string.IsNullOrWhiteSpace(SaleEmployee.SelectedValue.ToString()) ||
+                string.IsNullOrWhiteSpace(SaleQuantity.Text) ||
+                string.IsNullOrWhiteSpace(SaleInvoiceID.Text) ||
+                string.IsNullOrWhiteSpace(SaleAmount.Text) ||
+                SaleDate.SelectedDate == null
+                )
+            {
+                MessageBox.Show("Please fill in all required fields.");
+                return false;
+            }
+            return true;
         }
 
         public void submit(object sender, RoutedEventArgs e)
         {
-            MySqlConnection connection = new MySqlConnection("Server=localhost;Uid=root;Pwd=root;database=book_system");
-            connection.Open();
-
-            string insertQuery = "INSERT INTO sales (SaleID, SaleInvoiceID, SaleMemberID, SaleBookID, SaleEmployeeID, SaleQuantity, SaleAmount, SaleDate) VALUES (@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8)";
-
-            using (MySqlCommand cmd = new MySqlCommand(insertQuery, connection))
+            try
             {
-                cmd.Parameters.AddWithValue("@param1", SaleID.Text);
-                cmd.Parameters.AddWithValue("@param2", SaleInvoiceID.Text);
-                cmd.Parameters.AddWithValue("@param3", SaleMember.SelectedValue.ToString());
-                cmd.Parameters.AddWithValue("@param4", SaleBook.SelectedValue.ToString());
-                cmd.Parameters.AddWithValue("@param5", SaleEmployee.SelectedValue.ToString());
-                cmd.Parameters.AddWithValue("@param6", SaleQuantity.Text);
-                cmd.Parameters.AddWithValue("@param7", SaleAmount.Text);
-                cmd.Parameters.AddWithValue("@param8", SaleDate.SelectedDate.Value.ToString("yyyy-MM-dd"));
-
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                if(areInputsNotEmpty())
                 {
-                    MessageBox.Show("Data inserted successfully!");
-                    clear();
-                }
-                else
-                {
-                    MessageBox.Show("No rows were inserted. Check your data or database.");
+                    String query = "INSERT INTO sales (SaleID, SaleInvoiceID, SaleMemberID, SaleBookID, SaleEmployeeID, SaleQuantity, SaleAmount, SaleDate)";
+                    String[] values = {
+                    SaleID.Text,
+                    SaleInvoiceID.Text,
+                    SaleMember.SelectedValue.ToString(),
+                    SaleBook.SelectedValue.ToString(),
+                    SaleEmployee.SelectedValue.ToString(),
+                    SaleQuantity.Text,
+                    SaleAmount.Text,
+                    SaleDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                };
+
+                    if (DB.InsertData(query, values))
+                    {
+                        MessageBox.Show("Data inserted successfully!");
+                        clearInputs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No rows were inserted. Check your data or database.");
+                    }
                 }
             }
-            connection.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

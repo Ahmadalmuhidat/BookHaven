@@ -15,13 +15,11 @@
             <RowDefinition Height=".05*"></RowDefinition>
             <RowDefinition Height=".70*"></RowDefinition>
         </Grid.RowDefinitions>
-
         <Border Grid.Row="0" BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
             <StackPanel>
                 <TextBlock Text="Employee Deatails" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             </StackPanel>
         </Border>
-
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -29,45 +27,32 @@
                     <ColumnDefinition Width=".30*"></ColumnDefinition>
                     <ColumnDefinition Width=".50*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
                 <StackPanel Grid.Column="0">
                     <Border BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
-                        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="/Pages/Profiles/person.jpg"/>
+                        <Image x:Name="EmployeeImage" Width="250" Height="150" Stretch="Fill"/>
                     </Border>
                 </StackPanel>
-
                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Member ID:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address Line 1:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address Line 2:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Address City:</Bold> text
-                    </TextBlock>
+                    <TextBlock x:Name="EmployeeID" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeFullName" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeAddressLine1" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeAddressLine2" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeAddressCity" Margin="5" TextWrapping="Wrap" FontSize="13"/>
                 </StackPanel>
-
                 <StackPanel Grid.Column="2" Orientation="Vertical">
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Phone Number:</Bold> text
-                    </TextBlock>
-                    <TextBlock Margin="5" TextWrapping="Wrap" FontSize="13">
-                       <Bold>Date Of Joining:</Bold> text
-                    </TextBlock>
+                    <TextBlock x:Name="EmployeeAdressState" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeePhoneNumber" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeDateOfJoining" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeSalary" Margin="5" TextWrapping="Wrap" FontSize="13"/>
+                    <TextBlock x:Name="EmployeeMGRStatus" Margin="5" TextWrapping="Wrap" FontSize="13"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
-
         <Border Grid.Row="2" BorderBrush="Gray" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
             <StackPanel>
                 <TextBlock Text="Previous Sales" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
             </StackPanel>
         </Border>
-
         <StackPanel Grid.Row="3">
             <StackPanel>
                 <DataGrid x:Name="Sales" Grid.Row="2">

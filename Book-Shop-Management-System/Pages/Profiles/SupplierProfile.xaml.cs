@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 
 
@@ -38,6 +29,14 @@ namespace Book_Shop_Management_System.Pages.Profiles
             getSupplierInfo(SupplierID);
             getPreviousPurchases(SupplierID);
         }
+
+        public void load_image(String ID)
+        {
+            String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            String AssetsPath = RootPath + "/Assets/Suppliers Images/" + ID + ".png";
+            SupplierImage.Source = new BitmapImage(new Uri(AssetsPath));
+        }
+
         public void getPreviousPurchases(String BID)
         {
             try
@@ -92,7 +91,31 @@ namespace Book_Shop_Management_System.Pages.Profiles
                         {
                             while (reader.Read())
                             {
-                                SupplierID.Text = "Supplier ID: " + reader["SupplierID"].ToString();
+                                load_image(reader["SupplierID"].ToString());
+
+                                SupplierID.Inlines.Add(new Run("Supplier ID: ") { FontWeight = FontWeights.Bold });
+                                SupplierID.Inlines.Add(new Run(reader["SupplierID"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierFullName.Inlines.Add(new Run("Full Name: ") { FontWeight = FontWeights.Bold });
+                                SupplierFullName.Inlines.Add(new Run(reader["SupplierFullName"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierPhoneNumber.Inlines.Add(new Run("Phone Number: ") { FontWeight = FontWeights.Bold });
+                                SupplierPhoneNumber.Inlines.Add(new Run(reader["SupplierID"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierAddressLine1.Inlines.Add(new Run("Address Line 1: ") { FontWeight = FontWeights.Bold });
+                                SupplierAddressLine1.Inlines.Add(new Run(reader["SupplierAddressLine1"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierAddressLine2.Inlines.Add(new Run("Address Line 2: ") { FontWeight = FontWeights.Bold });
+                                SupplierAddressLine2.Inlines.Add(new Run(reader["SupplierAddressLine2"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierCity.Inlines.Add(new Run("City: ") { FontWeight = FontWeights.Bold });
+                                SupplierCity.Inlines.Add(new Run(reader["SupplierCity"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierState.Inlines.Add(new Run("State: ") { FontWeight = FontWeights.Bold });
+                                SupplierState.Inlines.Add(new Run(reader["SupplierState"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                SupplierCreateDate.Inlines.Add(new Run("Create Date: ") { FontWeight = FontWeights.Bold });
+                                SupplierCreateDate.Inlines.Add(new Run(reader["SupplierCreateDate"].ToString()) { FontWeight = FontWeights.Regular });
                             }
                         }
                     }

@@ -1,19 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Book_Shop_Management_System.Pages.Profiles
 {
@@ -37,6 +28,13 @@ namespace Book_Shop_Management_System.Pages.Profiles
             getSales(EID);
         }
 
+        public void load_image(String ID)
+        {
+            String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            String AssetsPath = RootPath + "/Assets/Employees Images/" + ID + ".png";
+            EmployeeImage.Source = new BitmapImage(new Uri(AssetsPath));
+        }
+
         public void getInfo(string EID)
         {
             try
@@ -53,7 +51,37 @@ namespace Book_Shop_Management_System.Pages.Profiles
                         {
                             while (reader.Read())
                             {
+                                load_image(reader["EmployeeID"].ToString());
 
+                                EmployeeID.Inlines.Add(new Run("Employee ID: ") { FontWeight = FontWeights.Bold });
+                                EmployeeID.Inlines.Add(new Run(reader["EmployeeID"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeFullName.Inlines.Add(new Run("Full Name: ") { FontWeight = FontWeights.Bold });
+                                EmployeeFullName.Inlines.Add(new Run(reader["EmployeeFullName"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeAddressLine1.Inlines.Add(new Run("Address Line 1: ") { FontWeight = FontWeights.Bold });
+                                EmployeeAddressLine1.Inlines.Add(new Run(reader["EmployeeAdressLine1"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeAddressLine2.Inlines.Add(new Run("Address Line 2: ") { FontWeight = FontWeights.Bold });
+                                EmployeeAddressLine2.Inlines.Add(new Run(reader["EmployeeAdressLine2"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeAddressCity.Inlines.Add(new Run("Address City: ") { FontWeight = FontWeights.Bold });
+                                EmployeeAddressCity.Inlines.Add(new Run(reader["EmployeeAdressCity"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeAdressState.Inlines.Add(new Run("Addres State: ") { FontWeight = FontWeights.Bold });
+                                EmployeeAdressState.Inlines.Add(new Run(reader["EmployeeAdressState"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeePhoneNumber.Inlines.Add(new Run("Phone Number: ") { FontWeight = FontWeights.Bold });
+                                EmployeePhoneNumber.Inlines.Add(new Run(reader["EmployeePhoneNumber"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeDateOfJoining.Inlines.Add(new Run("Phone Number: ") { FontWeight = FontWeights.Bold });
+                                EmployeeDateOfJoining.Inlines.Add(new Run(reader["EmployeeDateOfJoining"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeSalary.Inlines.Add(new Run("Salary: ") { FontWeight = FontWeights.Bold });
+                                EmployeeSalary.Inlines.Add(new Run(reader["EmployeeSalary"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                EmployeeMGRStatus.Inlines.Add(new Run("MGR Status: ") { FontWeight = FontWeights.Bold });
+                                EmployeeMGRStatus.Inlines.Add(new Run(reader["EmployeeMGRStatus"].ToString()) { FontWeight = FontWeights.Regular });
                             }
                         }
                     }

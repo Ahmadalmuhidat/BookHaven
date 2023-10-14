@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,13 @@ namespace Book_Shop_Management_System.Pages.Profiles
             getSales(EID);
         }
 
+        public void load_image(String ID)
+        {
+            String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            String AssetsPath = RootPath + "/Assets/Members Images/" + ID + ".png";
+            MemberImage.Source = new BitmapImage(new Uri(AssetsPath));
+        }
+
         public void getInfo(string EID)
         {
             try
@@ -46,13 +54,43 @@ namespace Book_Shop_Management_System.Pages.Profiles
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from employees WHERE EmployeeID=@param1";
+                        cmd.CommandText = "select * from members WHERE MemberID=@param1";
                         cmd.Parameters.AddWithValue("@param1", EID);
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                load_image(reader["MemberID"].ToString());
 
+                                MemberID.Inlines.Add(new Run("Member ID: ") { FontWeight = FontWeights.Bold });
+                                MemberID.Inlines.Add(new Run(reader["MemberID"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberFullName.Inlines.Add(new Run("Full Name: ") { FontWeight = FontWeights.Bold });
+                                MemberFullName.Inlines.Add(new Run(reader["MemberFullName"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberAddressLine1.Inlines.Add(new Run("Address Line 1: ") { FontWeight = FontWeights.Bold });
+                                MemberAddressLine1.Inlines.Add(new Run(reader["MemberAddressLine1"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberAddressLine2.Inlines.Add(new Run("Address Line 2: ") { FontWeight = FontWeights.Bold });
+                                MemberAddressLine2.Inlines.Add(new Run(reader["MemberAddressLine2"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberAddressCity.Inlines.Add(new Run("Address City: ") { FontWeight = FontWeights.Bold });
+                                MemberAddressCity.Inlines.Add(new Run(reader["MemberAddressCity"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberPhoneNumber.Inlines.Add(new Run("Phone Number: ") { FontWeight = FontWeights.Bold });
+                                MemberPhoneNumber.Inlines.Add(new Run(reader["MemberPhoneNumber"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MembershipBeginDate.Inlines.Add(new Run("Membership Begin Date: ") { FontWeight = FontWeights.Bold });
+                                MembershipBeginDate.Inlines.Add(new Run(reader["MemberBeginDate"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MembershipEndDate.Inlines.Add(new Run("Membership End Date: ") { FontWeight = FontWeights.Bold });
+                                MembershipEndDate.Inlines.Add(new Run(reader["MemberEndDate"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                AddressState.Inlines.Add(new Run("Addres State: ") { FontWeight = FontWeights.Bold });
+                                AddressState.Inlines.Add(new Run(reader["MemberAddressState"].ToString()) { FontWeight = FontWeights.Regular });
+
+                                MemberValid.Inlines.Add(new Run("Membership Valid: ") { FontWeight = FontWeights.Bold });
+                                MemberValid.Inlines.Add(new Run(reader["MemberValid"].ToString()) { FontWeight = FontWeights.Regular });
                             }
                         }
                     }

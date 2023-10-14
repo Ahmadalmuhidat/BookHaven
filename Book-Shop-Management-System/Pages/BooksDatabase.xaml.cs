@@ -1,25 +1,18 @@
-﻿using Book_Shop_Management_System.Pages.Profiles;
-using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
+using Book_Shop_Management_System.Pages.Profiles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.IO;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static Book_Shop_Management_System.Pages.EmployeesDatabase;
 
 namespace Book_Shop_Management_System.Pages
 {
     public partial class BooksDatabase : Page
     {
+        private MySQLConnector DB = new MySQLConnector();
         public String BID;
 
         public class BooksDataItem
@@ -35,36 +28,28 @@ namespace Book_Shop_Management_System.Pages
         public BooksDatabase()
         {
             InitializeComponent();
-            mysql();
+            getBooks();
         }
 
-        private void mysql()
+        public void getBooks()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select * from books";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from books";
-                        using (var reader = cmd.ExecuteReader())
+                        BID = row["BookID"].ToString();
+                        books_table.Items.Add(new BooksDataItem
                         {
-                            while (reader.Read())
-                            {
-                                this.BID = reader["BookID"].ToString();
-                                books_table.Items.Add(new BooksDataItem
-                                {
-                                    BookID = reader["BookID"].ToString(),
-                                    BookName = reader["BookName"].ToString(),
-                                    BookAuthor = reader["BookAuthor"].ToString(),
-                                    BookPrice = reader["BookPrice"].ToString(),
-                                    BookQuantity = reader["BookQuantity"].ToString(),
-                                    ButtonBookID = reader["BookID"].ToString()
-                                });
-                            }
-                        }
+                            BookID = row["BookID"].ToString(),
+                            BookName = row["BookName"].ToString(),
+                            BookAuthor = row["BookAuthor"].ToString(),
+                            BookPrice = row["BookPrice"].ToString(),
+                            BookQuantity = row["BookQuantity"].ToString(),
+                            ButtonBookID = row["BookID"].ToString()
+                        });
                     }
                 }
             }
@@ -82,6 +67,45 @@ namespace Book_Shop_Management_System.Pages
                 String ButtonBookID = (String)button.CommandParameter;
                 BookProfile bookProfilePage = new BookProfile(ButtonBookID);
                 NavigationService.Navigate(bookProfilePage);
+            }
+        }
+
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BooksDataItem classObj = books_table.SelectedItem as BooksDataItem;
+                String id = classObj.BookID;
+                String[] values = { id };
+                String query = "DELETE FROM books WHERE BookID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    string DistinationFolder = RootPath + "/Assets/Books Images/" + id + ".png";
+
+                    if (File.Exists(DistinationFolder))
+                    {
+                        File.Delete(DistinationFolder);
+                        Console.WriteLine("File deleted successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("File not found.");
+                    }
+
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    books_table.Items.Clear();
+                    getBooks();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }

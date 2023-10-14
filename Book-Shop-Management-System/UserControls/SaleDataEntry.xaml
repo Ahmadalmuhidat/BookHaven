@@ -11,89 +11,71 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock Text="New Sale Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
                 <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Sale ID" FontWeight="Bold"/>
-                         <TextBox x:Name="SaleID" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Sale Invoice ID" FontWeight="Bold"/>
-                         <TextBox x:Name="SaleInvoiceID" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Sale Member" FontWeight="Bold"/>
-                         <ComboBox x:Name="SaleMember" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value"></ComboBox>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Sale Book" FontWeight="Bold"/>
-                         <ComboBox x:Name="SaleBook" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value"></ComboBox>
-                    </TextBlock>
-                    <TextBlock>
-                     <Grid>
-                         <Grid.ColumnDefinitions>
-                             <ColumnDefinition Width=".20*"></ColumnDefinition>
-                             <ColumnDefinition Width=".80*"></ColumnDefinition>
-                         </Grid.ColumnDefinitions>
-                     </Grid>
-                     <Label Grid.Column="0" Content="Sale Quantity" FontWeight="Bold"/>
-                     <TextBox x:Name="SaleQuantity" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                     <Grid>
-                         <Grid.ColumnDefinitions>
-                             <ColumnDefinition Width=".20*"></ColumnDefinition>
-                             <ColumnDefinition Width=".80*"></ColumnDefinition>
-                         </Grid.ColumnDefinitions>
-                     </Grid>
-                     <Label Grid.Column="0" Content="Sale Amount" FontWeight="Bold"/>
-                     <TextBox x:Name="SaleAmount" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                     <Grid>
-                         <Grid.ColumnDefinitions>
-                             <ColumnDefinition Width=".20*"></ColumnDefinition>
-                             <ColumnDefinition Width=".80*"></ColumnDefinition>
-                         </Grid.ColumnDefinitions>
-                     </Grid>
-                     <Label Grid.Column="0" Content="Sale Employee" FontWeight="Bold"/>
-                     <ComboBox x:Name="SaleEmployee" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value"></ComboBox>
-                    </TextBlock>
-                    <TextBlock>
-                     <Grid>
-                         <Grid.ColumnDefinitions>
-                             <ColumnDefinition Width=".20*"></ColumnDefinition>
-                             <ColumnDefinition Width=".80*"></ColumnDefinition>
-                         </Grid.ColumnDefinitions>
-                     </Grid>
-                     <Label Grid.Column="0" Content="SaleDate" FontWeight="Bold"/>
-                     <DatePicker x:Name="SaleDate" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                        <Button Content="submit" Click="submit"/>
-                    </TextBlock>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale ID" FontWeight="Bold"/>
+                        <TextBox x:Name="SaleID" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Invoice ID" FontWeight="Bold"/>
+                        <TextBox x:Name="SaleInvoiceID" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Member" FontWeight="Bold"/>
+                        <ComboBox x:Name="SaleMember" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Book" FontWeight="Bold"/>
+                        <ComboBox x:Name="SaleBook" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Quantity" FontWeight="Bold"/>
+                        <TextBox x:Name="SaleQuantity" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Amount" FontWeight="Bold"/>
+                        <TextBox x:Name="SaleAmount" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Employee" FontWeight="Bold"/>
+                        <ComboBox x:Name="SaleEmployee" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Sale Date" FontWeight="Bold"/>
+                        <DatePicker x:Name="SaleDate" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Button Content="submit" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>
             </StackPanel>
         </Border>

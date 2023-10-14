@@ -1,26 +1,18 @@
-﻿using Book_Shop_Management_System.Pages.Profiles;
-using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
+using Book_Shop_Management_System.Pages.Profiles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static Book_Shop_Management_System.Pages.MembersDatabase;
 
 namespace Book_Shop_Management_System.Pages
 {
     public partial class EmployeesDatabase : Page
     {
         public string EID;
+        private MySQLConnector DB = new MySQLConnector();
 
         public class EmployeesDataItem
         {
@@ -40,41 +32,32 @@ namespace Book_Shop_Management_System.Pages
         public EmployeesDatabase()
         {
             InitializeComponent();
-            mysql();
+            getEmployees();
         }
 
-        private void mysql()
+        public void getEmployees()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select * from employees";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from employees";
-                        using (var reader = cmd.ExecuteReader())
+                        Employees.Items.Add(new EmployeesDataItem
                         {
-                            while (reader.Read())
-                            {
-                                this.EID = reader["EmployeeID"].ToString();
-                                Employees.Items.Add(new EmployeesDataItem
-                                {
-                                    EmployeeID = reader["EmployeeID"].ToString(),
-                                    EmployeeFullName = reader["EmployeeFullName"].ToString(),
-                                    EmployeeAdressLine1 = reader["EmployeeAdressLine1"].ToString(),
-                                    EmployeeAdressLine2 = reader["EmployeeAdressLine2"].ToString(),
-                                    EmployeeAdressCity = reader["EmployeeAdressCity"].ToString(),
-                                    EmployeeAdressState = reader["EmployeeAdressState"].ToString(),
-                                    EmployeePhoneNumber = reader["EmployeePhoneNumber"].ToString(),
-                                    EmployeeDateOfJoining = reader["EmployeeDateOfJoining"].ToString(),
-                                    EmployeeSalary = reader["EmployeeSalary"].ToString(),
-                                    EmployeeMGRStatus = reader["EmployeeMGRStatus"].ToString(),
-                                    ButtonEmployeeID = reader["EmployeeID"].ToString()
-                                });
-                            }
-                        }
+                            EmployeeID = row["EmployeeID"].ToString(),
+                            EmployeeFullName = row["EmployeeFullName"].ToString(),
+                            EmployeeAdressLine1 = row["EmployeeAdressLine1"].ToString(),
+                            EmployeeAdressLine2 = row["EmployeeAdressLine2"].ToString(),
+                            EmployeeAdressCity = row["EmployeeAdressCity"].ToString(),
+                            EmployeeAdressState = row["EmployeeAdressState"].ToString(),
+                            EmployeePhoneNumber = row["EmployeePhoneNumber"].ToString(),
+                            EmployeeDateOfJoining = row["EmployeeDateOfJoining"].ToString(),
+                            EmployeeSalary = row["EmployeeSalary"].ToString(),
+                            EmployeeMGRStatus = row["EmployeeMGRStatus"].ToString(),
+                            ButtonEmployeeID = row["EmployeeID"].ToString()
+                        });
                     }
                 }
             }
@@ -92,6 +75,45 @@ namespace Book_Shop_Management_System.Pages
                 String ButtonEmployeeID = (String)button.CommandParameter;
                 EmployeeProfile employeeProfile = new EmployeeProfile(ButtonEmployeeID);
                 NavigationService.Navigate(employeeProfile);
+            }
+        }
+
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                EmployeesDataItem classObj = Employees.SelectedItem as EmployeesDataItem;
+                String id = classObj.EmployeeID;
+                String[] values = { id };
+                String query = "DELETE FROM employees WHERE EmployeeID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    string DistinationFolder = RootPath + "/Assets/Employees Images/" + id + ".png";
+
+                    if (File.Exists(DistinationFolder))
+                    {
+                        File.Delete(DistinationFolder);
+                        Console.WriteLine("File deleted successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("File not found.");
+                    }
+
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    Employees.Items.Clear();
+                    getEmployees();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }

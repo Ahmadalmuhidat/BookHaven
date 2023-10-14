@@ -1,24 +1,17 @@
-﻿using Book_Shop_Management_System.Pages.Profiles;
-using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
+using Book_Shop_Management_System.Pages.Profiles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Book_Shop_Management_System.Pages
 {
     public partial class MembersDatabase : Page
     {
+        private MySQLConnector DB = new MySQLConnector();
 
         public class MemberDataItem
         {
@@ -38,41 +31,32 @@ namespace Book_Shop_Management_System.Pages
         public MembersDatabase()
         {
             InitializeComponent();
-            mysql();
+            getMembers();
         }
 
-        private void mysql()
+        public void getMembers()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select * from members";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from members";
-                        // cmd.Parameters.AddWithValue("@ID", "100");
-                        using (var reader = cmd.ExecuteReader())
+                        Members.Items.Add(new MemberDataItem
                         {
-                            while (reader.Read())
-                            {
-                                Members.Items.Add(new MemberDataItem
-                                {
-                                    MemberID = reader["MemberID"].ToString(),
-                                    MemberFullName = reader["MemberFullName"].ToString(),
-                                    MemberAddressLine1 = reader["MemberAddressLine1"].ToString(),
-                                    MemberAddressLine2 = reader["MemberAddressLine2"].ToString(),
-                                    MemberAddressCity = reader["MemberAddressCity"].ToString(),
-                                    MemberAddressState = reader["MemberAddressState"].ToString(),
-                                    MemberPhoneNumber = reader["MemberPhoneNumber"].ToString(),
-                                    MemberEndDate = reader["MemberEndDate"].ToString(),
-                                    MemberBeginDate = reader["MemberBeginDate"].ToString(),
-                                    MemberValid = reader["MemberValid"].ToString(),
-                                    ButtonMemberID = reader["MemberID"].ToString(),
-                                });
-                            }
-                        }
+                            MemberID = row["MemberID"].ToString(),
+                            MemberFullName = row["MemberFullName"].ToString(),
+                            MemberAddressLine1 = row["MemberAddressLine1"].ToString(),
+                            MemberAddressLine2 = row["MemberAddressLine2"].ToString(),
+                            MemberAddressCity = row["MemberAddressCity"].ToString(),
+                            MemberAddressState = row["MemberAddressState"].ToString(),
+                            MemberPhoneNumber = row["MemberPhoneNumber"].ToString(),
+                            MemberEndDate = row["MemberEndDate"].ToString(),
+                            MemberBeginDate = row["MemberBeginDate"].ToString(),
+                            MemberValid = row["MemberValid"].ToString(),
+                            ButtonMemberID = row["MemberID"].ToString(),
+                        });
                     }
                 }
             }
@@ -90,6 +74,45 @@ namespace Book_Shop_Management_System.Pages
                 String ButtonMemberID = (String)button.CommandParameter;
                 MemberProfile profile = new MemberProfile(ButtonMemberID);
                 NavigationService.Navigate(profile);
+            }
+        }
+
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MemberDataItem classObj = Members.SelectedItem as MemberDataItem;
+                String id = classObj.MemberID;
+                String[] values = { id };
+                String query = "DELETE FROM members WHERE MemberID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    string DistinationFolder = RootPath + "/Assets/Members Images/" + id + ".png";
+
+                    if (File.Exists(DistinationFolder))
+                    {
+                        File.Delete(DistinationFolder);
+                        Console.WriteLine("File deleted successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("File not found.");
+                    }
+
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    Members.Items.Clear();
+                    getMembers();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }

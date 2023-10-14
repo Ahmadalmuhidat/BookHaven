@@ -1,18 +1,9 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Book_Shop_Management_System.Pages
 {
@@ -30,41 +21,34 @@ namespace Book_Shop_Management_System.Pages
             public string SaleEmployee { get; set; }
         }
 
+        private MySQLConnector DB = new MySQLConnector();
+
         public SalesDatabase()
         {
             InitializeComponent();
-            mysql();
+            getSales();
         }
 
-        private void mysql()
+        public void getSales()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select * from sales INNER JOIN members ON members.MemberID=SaleMemberID INNER JOIN books ON books.BookID=SaleBookID INNER JOIN employees ON employees.EmployeeID=SaleEmployeeID";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from sales";
-                        // cmd.Parameters.AddWithValue("@ID", "100");
-                        using (var reader = cmd.ExecuteReader())
+                        Sales.Items.Add(new SalesDataItem
                         {
-                            while (reader.Read())
-                            {
-                                Sales.Items.Add(new SalesDataItem
-                                {
-                                    SaleID = reader["SaleID"].ToString(),
-                                    SaleInvoiceID = reader["SaleInvoiceID"].ToString(),
-                                    SaleMemberID = reader["SaleMemberID"].ToString(),
-                                    SaleBookID = reader["SaleBookID"].ToString(),
-                                    SaleQuantity = reader["SaleQuantity"].ToString(),
-                                    SaleAmount = reader["SaleAmount"].ToString(),
-                                    SaleDate = reader["SaleDate"].ToString(),
-                                    SaleEmployee = reader["SaleEmployeeID"].ToString(),
-                                });
-                            }
-                        }
+                            SaleID = row["SaleID"].ToString(),
+                            SaleInvoiceID = row["SaleInvoiceID"].ToString(),
+                            SaleMemberID = row["MemberFullName"].ToString(),
+                            SaleBookID = row["BookName"].ToString(),
+                            SaleQuantity = row["SaleQuantity"].ToString(),
+                            SaleAmount = row["SaleAmount"].ToString(),
+                            SaleDate = row["SaleDate"].ToString(),
+                            SaleEmployee = row["EmployeeFullName"].ToString(),
+                        });
                     }
                 }
             }
@@ -74,5 +58,30 @@ namespace Book_Shop_Management_System.Pages
             }
         }
 
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SalesDataItem classObj = Sales.SelectedItem as SalesDataItem;
+                String id = classObj.SaleID;
+                String[] values = { id };
+                String query = "DELETE FROM sales WHERE SaleID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    Sales.Items.Clear();
+                    getSales();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }

@@ -11,119 +11,96 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock Text="New Member Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
                 <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
-                    <TextBlock>
-                        <Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".40*"></ColumnDefinition>
+                        <ColumnDefinition Width=".60*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Select Member Image" Click="SelectImage"/>
+                    <TextBox x:Name="MemberImage" Grid.Column="1" Width="300"/>
+                </Grid>
+                        <Grid Margin="0, 10, 0, 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                <ColumnDefinition Width=".80*"></ColumnDefinition>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member ID" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberID" Grid.Column="1" Width="300"/>
                         </Grid>
-                        <Label Grid.Column="0" Content="Employee Image" FontWeight="Bold"/>
-                        <Button Content="Select Image" Click="SelectImage_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" />
-                        <Image x:Name="imagePreview" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" />
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member ID" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberID" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Full Name" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberFullName" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Address Line 1" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberAddressLine1" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Address Line 2" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberAddressLine2" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Address City" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberAddressCity" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Address State" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberAddressState" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Phone Number" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberPhoneNumber" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member Begin Date" FontWeight="Bold"/>
-                         <DatePicker x:Name="MemberBeginDate" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Member End Date" FontWeight="Bold"/>
-                         <DatePicker x:Name="MemberEndDate" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                             <Grid>
-                                 <Grid.ColumnDefinitions>
-                                     <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                     <ColumnDefinition Width=".70*"></ColumnDefinition>
-                                 </Grid.ColumnDefinitions>
-                             </Grid>
-                             <Label Grid.Column="0" Content="Member Valid" FontWeight="Bold"/>
-                         <TextBox x:Name="MemberValid" Grid.Column="1" Width="300"/>
-                    </TextBlock>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Full Name" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberFullName" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Address Line 1" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberAddressLine1" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Address Line 2" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberAddressLine2" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Address City" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberAddressCity" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Address State" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberAddressState" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Phone Number" FontWeight="Bold"/>
+                            <TextBox x:Name="MemberPhoneNumber" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member Begin Date" FontWeight="Bold"/>
+                            <DatePicker x:Name="MemberBeginDate" Grid.Column="1" Width="300"/>
+                        </Grid>
+                        <Grid Margin="0, 10, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".40*"></ColumnDefinition>
+                                <ColumnDefinition Width=".60*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="Member End Date" FontWeight="Bold"/>
+                            <DatePicker x:Name="MemberEndDate" Grid.Column="1" Width="300"/>
+                        </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Member Valid" FontWeight="Bold"/>
+                        <TextBox x:Name="MemberValid" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Button Content="submit" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>
-                <Button Content="submit" Click="submit"/>
             </StackPanel>
         </Border>
     </Grid>

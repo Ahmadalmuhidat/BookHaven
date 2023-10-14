@@ -1,19 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static Book_Shop_Management_System.Pages.SalesDatabase;
 
 namespace Book_Shop_Management_System.Pages
 {
@@ -31,42 +20,60 @@ namespace Book_Shop_Management_System.Pages
 
     public partial class PurchasesDatabase : Page
     {
+        private MySQLConnector DB = new MySQLConnector();
         public PurchasesDatabase()
         {
             InitializeComponent();
-            mysql();
+            getPurchases();
         }
 
-        private void mysql()
+        public void getPurchases()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "SELECT * FROM purchases INNER JOIN books ON books.BookID=purchases.PurchaseBookID INNER JOIN suppliers ON SupplierID=purchases.PurchaseSupplierID";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from purchases";
-                        // cmd.Parameters.AddWithValue("@ID", "100");
-                        using (var reader = cmd.ExecuteReader())
+                        Purchases.Items.Add(new PurchasesDataItem
                         {
-                            while (reader.Read())
-                            {
-                                Purchases.Items.Add(new PurchasesDataItem
-                                {
-                                    PurchaseID = reader["PurchaseID"].ToString(),
-                                    PurchaseBookID = reader["PurchaseBookID"].ToString(),
-                                    PurchaseSupplierID = reader["PurchaseSupplierID"].ToString(),
-                                    PurchaseQuantity = reader["PurchaseQuantity"].ToString(),
-                                    PurchaseDate = reader["PurchaseDate"].ToString(),
-                                    PurchaseETA = reader["PurchaseETA"].ToString(),
-                                    PurchaseReceived = reader["PurchaseReceived"].ToString(),
-                                    PurchaseInvoice = reader["PurchaseInvoice"].ToString(),
-                                });
-                            }
-                        }
+                            PurchaseID = row["PurchaseID"].ToString(),
+                            PurchaseBookID = row["BookName"].ToString(),
+                            PurchaseSupplierID = row["SupplierFullName"].ToString(),
+                            PurchaseQuantity = row["PurchaseQuantity"].ToString(),
+                            PurchaseDate = row["PurchaseDate"].ToString(),
+                            PurchaseETA = row["PurchaseETA"].ToString(),
+                            PurchaseReceived = row["PurchaseReceived"].ToString(),
+                            PurchaseInvoice = row["PurchaseInvoice"].ToString(),
+                        });
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PurchasesDataItem classObj = Purchases.SelectedItem as PurchasesDataItem;
+                String id = classObj.PurchaseID;
+                String[] values = { id };
+                String query = "DELETE FROM purchases WHERE PurchaseID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    Purchases.Items.Clear();
+                    getPurchases();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
                 }
             }
             catch (Exception ex)

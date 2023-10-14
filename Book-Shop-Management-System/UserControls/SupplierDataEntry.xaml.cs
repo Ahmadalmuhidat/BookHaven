@@ -1,45 +1,36 @@
-﻿using Microsoft.Win32;
-using MySql.Data.MySqlClient;
+﻿using Book_Shop_Management_System.DB;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Book_Shop_Management_System.UserControls
 {
     public partial class SupplierDataEntry : UserControl
     {
-        public string selectedImagePath;
+        private String selectedImagePath;
+        private MySQLConnector DB = new MySQLConnector();
+
         public SupplierDataEntry()
         {
             InitializeComponent();
         }
 
-        private void SelectImage_Click(object sender, RoutedEventArgs e)
+        private void selectImage(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-
             openFileDialog.Filter = "Image files (*.jpg, *.png, *.bmp)|*.jpg;*.png;*.bmp|All files (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // Load and display the selected image
                 this.selectedImagePath = openFileDialog.FileName;
-                imagePreview.Source = new BitmapImage(new Uri(selectedImagePath));
+                imagePreview.Text = selectedImagePath;
             }
         }
 
-        public void clear()
+        private void clearInputs()
         {
             SupplierID.Clear();
             SupplierFullName.Clear();
@@ -48,41 +39,64 @@ namespace Book_Shop_Management_System.UserControls
             SupplierAddressLine2.Clear();
             SupplierCity.Clear();
             SupplierState.Clear();
-            imagePreview.Source = null;
+            SupplierCreationDate.SelectedDate = null;
+            imagePreview.Clear();
         }
 
-        public void submit(object sender, RoutedEventArgs e)
+        public bool areInputsNotEmpty()
         {
-            MySqlConnection connection = new MySqlConnection("Server=localhost;Uid=root;Pwd=root;database=book_system");
-            connection.Open();
-
-            string insertQuery = "INSERT INTO suppliers (SupplierID, SupplierFullName, SupplierPhoneNumber, SupplierAddressLine1, SupplierAddressLine2, SupplierCity, SupplierState, SupplierCreateDate, SupplierImagePath) VALUES (@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9)";
-
-            using (MySqlCommand cmd = new MySqlCommand(insertQuery, connection))
+            if (string.IsNullOrWhiteSpace(SupplierID.Text) ||
+                string.IsNullOrWhiteSpace(SupplierFullName.Text) ||
+                string.IsNullOrWhiteSpace(SupplierPhoneNumber.Text) ||
+                string.IsNullOrWhiteSpace(SupplierAddressLine1.Text) ||
+                string.IsNullOrWhiteSpace(SupplierAddressLine2.Text) ||
+                string.IsNullOrWhiteSpace(SupplierCity.Text) ||
+                string.IsNullOrWhiteSpace(SupplierState.Text) ||
+                SupplierCreationDate.SelectedDate == null
+                )
             {
-                cmd.Parameters.AddWithValue("@param1", SupplierID.Text);
-                cmd.Parameters.AddWithValue("@param2", SupplierFullName.Text);
-                cmd.Parameters.AddWithValue("@param3", SupplierPhoneNumber.Text);
-                cmd.Parameters.AddWithValue("@param4", SupplierAddressLine1.Text);
-                cmd.Parameters.AddWithValue("@param5", SupplierAddressLine2.Text);
-                cmd.Parameters.AddWithValue("@param6", SupplierCity.Text);
-                cmd.Parameters.AddWithValue("@param7", SupplierState.Text);
-                cmd.Parameters.AddWithValue("@param8", SupplierCreationDate.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@param9", this.selectedImagePath);
+                MessageBox.Show("Please fill in all required fields.");
+                return false;
+            }
+            return true;
+        }
 
-                int rowsAffected = cmd.ExecuteNonQuery();
+        private void submit(object sender, RoutedEventArgs e)
+        {
+            String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            String DistinationPath = RootPath + "/Assets/Suppliers Images/" + SupplierID.Text + ".png";
 
-                if (rowsAffected > 0)
+            try
+            {
+                String query = "INSERT INTO suppliers (SupplierID, SupplierFullName, SupplierPhoneNumber, SupplierAddressLine1, SupplierAddressLine2, SupplierCity, SupplierState, SupplierCreateDate, SupplierImagePath)";
+                String[] values = {
+                    SupplierID.Text,
+                    SupplierFullName.Text,
+                    SupplierPhoneNumber.Text,
+                    SupplierAddressLine1.Text,
+                    SupplierAddressLine2.Text,
+                    SupplierCity.Text,
+                    SupplierState.Text,
+                    SupplierCreationDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                    DistinationPath
+                };
+
+                if (DB.InsertData(query, values))
                 {
+                    System.IO.File.Copy(selectedImagePath, DistinationPath, true);
+                    selectedImagePath = "";
                     MessageBox.Show("Data inserted successfully!");
-                    clear();
+                    clearInputs();
                 }
                 else
                 {
                     MessageBox.Show("No rows were inserted. Check your data or database.");
                 }
             }
-            connection.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

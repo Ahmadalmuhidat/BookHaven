@@ -11,101 +11,80 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock Text="New Supplier Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
                 <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
-                    <TextBlock>
-                       <Grid>
-                           <Grid.ColumnDefinitions>
-                               <ColumnDefinition Width=".20*"></ColumnDefinition>
-                               <ColumnDefinition Width=".80*"></ColumnDefinition>
-                           </Grid.ColumnDefinitions>
-                       </Grid>
-                       <Label Grid.Column="0" Content="Supplier Image" FontWeight="Bold"/>
-                       <Button Content="Select Image" Click="SelectImage_Click" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" />
-                       <Image x:Name="imagePreview" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" />
-                    </TextBlock>
-                    <TextBlock>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                <ColumnDefinition Width=".70*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                        </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Select Supplier Image" Click="selectImage"/>
+                        <TextBox x:Name="imagePreview" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Supplier ID" FontWeight="Bold"/>
                         <TextBox x:Name="SupplierID" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier Full Name" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierFullName" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier Phone Number" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierPhoneNumber" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier Address Line 1" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierAddressLine1" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier Address Line 2" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierAddressLine2" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier City" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierCity" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier State" FontWeight="Bold"/>
-                         <TextBox x:Name="SupplierState" Grid.Column="1" Width="300"/>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                         </Grid>
-                         <Label Grid.Column="0" Content="Supplier Creation Date" FontWeight="Bold"/>
-                         <DatePicker x:Name="SupplierCreationDate" Grid.Column="1" Width="300"/>
-                    </TextBlock>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier Full Name" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierFullName" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier Phone Number" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierPhoneNumber" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier Address Line 1" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierAddressLine1" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier Address Line 2" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierAddressLine2" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier City" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierCity" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier State" FontWeight="Bold"/>
+                        <TextBox x:Name="SupplierState" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Supplier Creation Date" FontWeight="Bold"/>
+                        <DatePicker x:Name="SupplierCreationDate" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Button Content="submit" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>
-                <TextBlock>
-                    <Button Content="submit" Click="submit"/>
-                </TextBlock>
             </StackPanel>
         </Border>
     </Grid>

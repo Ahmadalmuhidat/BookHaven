@@ -11,73 +11,63 @@
             <StackPanel HorizontalAlignment="Center">
                 <TextBlock Text="New Book Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
                 <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                                              <Label Grid.Column="0" Content="Book ID" FontWeight="Bold"/>
-                            <TextBox x:Name="BookID" Grid.Column="1" Width="300"/>
-                         </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".30*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".70*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                                              <Label Grid.Column="0" Content="Book Name" FontWeight="Bold"/>
-                         <TextBox x:Name="BookName" Grid.Column="1" Width="300"/>
-                         </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                                      
-                             <Label Grid.Column="0" Content="Book Author" FontWeight="Bold"/>
-                            <TextBox x:Name="BookAuthor" Grid.Column="1" Width="300"/>
-                         </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                    
-                             <Label Grid.Column="0" Content="Book Price" FontWeight="Bold"/>
-                            <TextBox x:Name="BookPrice" Grid.Column="1" Width="300"/>
-                         </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                         <Grid>
-                             <Grid.ColumnDefinitions>
-                                 <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                 <ColumnDefinition Width=".80*"></ColumnDefinition>
-                             </Grid.ColumnDefinitions>
-                        
-                             <Label Grid.Column="0" Content="Book Quantity" FontWeight="Bold"/>
-                            <TextBox x:Name="BookQuantity" Grid.Column="1" Width="300"/>
-                         </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".20*"></ColumnDefinition>
-                                <ColumnDefinition Width=".80*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                    
-                            <Label Grid.Column="0" Content="Book Supplier" FontWeight="Bold"/>
-                            <ComboBox x:Name="BookSupplier" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value"></ComboBox>
-                        </Grid>
-                    </TextBlock>
-                    <TextBlock>
-                        <Button Content="submit" Click="submit" />
-                    </TextBlock>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".20*"></ColumnDefinition>
+                            <ColumnDefinition Width=".80*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Select Book Image" Click="SelectImage"/>
+                        <TextBox x:Name="BookImage" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".30*"></ColumnDefinition>
+                            <ColumnDefinition Width=".70*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book ID" FontWeight="Bold"/>
+                        <TextBox x:Name="BookID" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book Name" FontWeight="Bold"/>
+                        <TextBox x:Name="BookName" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book Author" FontWeight="Bold"/>
+                        <TextBox x:Name="BookAuthor" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book Price" FontWeight="Bold"/>
+                        <TextBox x:Name="BookPrice" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book Quantity" FontWeight="Bold"/>
+                        <TextBox x:Name="BookQuantity" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Book Supplier" FontWeight="Bold"/>
+                        <ComboBox x:Name="BookSupplier" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
+                    </Grid>
+                    <Button Content="submit" FontSize="15" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>
             </StackPanel>
         </Border>

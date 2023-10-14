@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Book_Shop_Management_System.Pages;
-using Google.Protobuf.WellKnownTypes;
+using Book_Shop_Management_System.DB;
+using Microsoft.Win32;
 using MySql.Data.MySqlClient;
 
 namespace Book_Shop_Management_System.UserControls
@@ -27,34 +17,41 @@ namespace Book_Shop_Management_System.UserControls
 
     public partial class BookDataEntry : UserControl
     {
+        private String selectedImagePath;
+        private MySQLConnector DB = new MySQLConnector();
+
         public BookDataEntry()
         {
             InitializeComponent();
             getSuppliers();
         }
 
+        private void SelectImage(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.png, *.bmp)|*.jpg;*.png;*.bmp|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                selectedImagePath = openFileDialog.FileName;
+                BookImage.Text = selectedImagePath;
+            }
+        }
+
         public void getSuppliers()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select SupplierID, SupplierFullName from suppliers";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select SupplierID, SupplierFullName from suppliers";
-                        using (var reader = cmd.ExecuteReader())
+                        BookSupplier.Items.Add(new ComboBoxItem
                         {
-                            while (reader.Read())
-                            {
-                                BookSupplier.Items.Add(new ComboBoxItem {
-                                    DisplayText = reader["SupplierFullName"].ToString(),
-                                    Value = reader["SupplierID"].ToString()
-                                });
-                            }
-                            
-                        }
+                            DisplayText = row["SupplierFullName"].ToString(),
+                            Value = row["SupplierID"].ToString()
+                        });
                     }
                 }
             }
@@ -64,7 +61,7 @@ namespace Book_Shop_Management_System.UserControls
             }
         }
 
-        public void clear()
+        public void clearInputs()
         {
             BookID.Clear();
             BookName.Clear();
@@ -73,35 +70,60 @@ namespace Book_Shop_Management_System.UserControls
             BookQuantity.Clear();
         }
 
+        public bool areInputsNotEmpty()
+        {
+            if (string.IsNullOrWhiteSpace(BookImage.Text) ||
+                string.IsNullOrWhiteSpace(BookID.Text) ||
+                string.IsNullOrWhiteSpace(BookName.Text) ||
+                string.IsNullOrWhiteSpace(BookAuthor.Text) ||
+                string.IsNullOrWhiteSpace(BookPrice.Text) ||
+                string.IsNullOrWhiteSpace(BookQuantity.Text) ||
+                BookSupplier.SelectedItem == null)
+            {
+                MessageBox.Show("Please fill in all required fields.");
+                return false;
+            }
+            return true;
+        }
+
         public void submit(object sender, RoutedEventArgs e)
         {
-            MySqlConnection connection = new MySqlConnection("Server=localhost;Uid=root;Pwd=root;database=book_system");
-            connection.Open();
-
-            string insertQuery = "INSERT INTO books (BookID, BookName, BookAuthor, BookPrice, BookQuantity, BookSupplier) VALUES (@param1, @param2, @param3, @param4, @param5, @param6)";
-
-            using (MySqlCommand cmd = new MySqlCommand(insertQuery, connection))
+            try
             {
-                cmd.Parameters.AddWithValue("@param1", BookID.Text);
-                cmd.Parameters.AddWithValue("@param2", BookName.Text);
-                cmd.Parameters.AddWithValue("@param3", BookAuthor.Text);
-                cmd.Parameters.AddWithValue("@param4", BookPrice.Text);
-                cmd.Parameters.AddWithValue("@param5", BookQuantity.Text);
-                cmd.Parameters.AddWithValue("@param6", BookSupplier.SelectedValue.ToString());
-
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                if (areInputsNotEmpty())
                 {
-                    MessageBox.Show("Data inserted successfully!");
-                    clear();
+                    String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    String DistinationFolder = RootPath + "/Assets/Books Images/" + BookID.Text + ".png";
+
+                    String query = "INSERT INTO books (BookID, BookName, BookAuthor, BookPrice, BookQuantity, BookSupplier, BookImage)";
+                    String[] values = {
+                        BookID.Text,
+                        BookName.Text,
+                        BookAuthor.Text,
+                        BookPrice.Text,
+                        BookQuantity.Text,
+                        BookSupplier.SelectedValue.ToString(),
+                        DistinationFolder
+                    };
+
+                    if (DB.InsertData(query, values))
+                    {
+                        System.IO.File.Copy(selectedImagePath, DistinationFolder, true);
+                        selectedImagePath = "";
+                        MessageBox.Show("Data inserted successfully!");
+                        clearInputs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No rows were inserted. Check your data or database.");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("No rows were inserted. Check your data or database.");
-                }
+               
             }
-            connection.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

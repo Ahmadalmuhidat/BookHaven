@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static Book_Shop_Management_System.Pages.BooksDatabase;
-using MySql.Data.MySqlClient;
 using Book_Shop_Management_System.Pages.Profiles;
+using Book_Shop_Management_System.DB;
+using System.Data;
+using System.IO;
 
 namespace Book_Shop_Management_System.Pages
 {
@@ -34,43 +25,34 @@ namespace Book_Shop_Management_System.Pages
 
     public partial class SuppliersDatabase : Page
     {
+        private MySQLConnector DB = new MySQLConnector();
         public SuppliersDatabase()
         {
             InitializeComponent();
-            mysql();
-
-            // suppliers_table.Items.Add(new SuppliersDataItem { SupplierID = "111", SupplierFullName = "Done", SupplierPhoneNumber = "22", SupplierAddressLine1 = "hello there", SupplierAddressLine2 = "11-11-11", SupplierCity = "11-11-11", SupplierState = "11-11-11" });
+            getSuppliers();
         }
 
-        private void mysql()
+        public void getSuppliers()
         {
             try
             {
-                var connstr = "Server=localhost;Uid=root;Pwd=root;database=book_system";
-                using (var conn = new MySqlConnection(connstr))
+                String query = "select * from suppliers";
+                using (var reader = DB.FetchData(query))
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
+                    foreach (DataRow row in reader.Rows)
                     {
-                        cmd.CommandText = "select * from suppliers";
-                        // cmd.Parameters.AddWithValue("@ID", "100");
-                        using (var reader = cmd.ExecuteReader())
+                        suppliers_table.Items.Add(new SuppliersDataItem
                         {
-                            while (reader.Read())
-                            {
-                                suppliers_table.Items.Add(new SuppliersDataItem {
-                                SupplierID = reader["SupplierID"].ToString(),
-                                SupplierFullName = reader["SupplierFullName"].ToString(),
-                                SupplierPhoneNumber = reader["SupplierPhoneNumber"].ToString(),
-                                SupplierAddressLine1 = reader["SupplierAddressLine1"].ToString(),
-                                SupplierAddressLine2 = reader["SupplierAddressLine2"].ToString(),
-                                SupplierCity = reader["SupplierCity"].ToString(),
-                                SupplierState = reader["SupplierState"].ToString(),
-                                SupplierCreationDate = reader["SupplierCreateDate"].ToString(),
-                                ButtonSupplierID = reader["SupplierID"].ToString()
-                                });
-                            }
-                        }
+                            SupplierID = row["SupplierID"].ToString(),
+                            SupplierFullName = row["SupplierFullName"].ToString(),
+                            SupplierPhoneNumber = row["SupplierPhoneNumber"].ToString(),
+                            SupplierAddressLine1 = row["SupplierAddressLine1"].ToString(),
+                            SupplierAddressLine2 = row["SupplierAddressLine2"].ToString(),
+                            SupplierCity = row["SupplierCity"].ToString(),
+                            SupplierState = row["SupplierState"].ToString(),
+                            SupplierCreationDate = row["SupplierCreateDate"].ToString(),
+                            ButtonSupplierID = row["SupplierID"].ToString()
+                        });
                     }
                 }
             }
@@ -89,6 +71,45 @@ namespace Book_Shop_Management_System.Pages
                 SupplierProfile supplierProfile = new SupplierProfile(ButtonSupplierID);
                 NavigationService.Navigate(supplierProfile);
 
+            }
+        }
+
+        private void delete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SuppliersDataItem classObj = suppliers_table.SelectedItem as SuppliersDataItem;
+                String id = classObj.SupplierID;
+                String[] values = { id };
+                String query = "DELETE FROM suppliers WHERE SupplierID=" + id;
+
+                if (DB.DeleteData(query))
+                {
+                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    string DistinationFolder = RootPath + "/Assets/Suppliers Images/" + id + ".png";
+
+                    if (File.Exists(DistinationFolder))
+                    {
+                        File.Delete(DistinationFolder);
+                        Console.WriteLine("File deleted successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("File not found.");
+                    }
+
+                    MessageBox.Show("Data has beem deleted successfully!");
+                    suppliers_table.Items.Clear();
+                    getSuppliers();
+                }
+                else
+                {
+                    MessageBox.Show("No rows were deleted. Check your data or database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }
