@@ -70,3 +70,10 @@ SaleEmployeeID varchar(200)
 SaleQuantity int 
 SaleDate date 
 SaleTotal int
+
+
+Note:
+you muts ad these rows to the database after creating it:
+
+in members table: '0', 'Unknown', '--', '--', '--', '--', '--', '2023-10-16', '2023-10-16', '--', '----'
+in employees table: '0', 'Unkown', '----', '----', '----', '----', '----', '2023-10-16', '0', '----', '----'
