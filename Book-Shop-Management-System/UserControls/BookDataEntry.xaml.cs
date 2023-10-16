@@ -63,7 +63,6 @@ namespace Book_Shop_Management_System.UserControls
 
         public void clearInputs()
         {
-            BookID.Clear();
             BookName.Clear();
             BookAuthor.Clear();
             BookPrice.Clear();
@@ -73,7 +72,6 @@ namespace Book_Shop_Management_System.UserControls
         public bool areInputsNotEmpty()
         {
             if (string.IsNullOrWhiteSpace(BookImage.Text) ||
-                string.IsNullOrWhiteSpace(BookID.Text) ||
                 string.IsNullOrWhiteSpace(BookName.Text) ||
                 string.IsNullOrWhiteSpace(BookAuthor.Text) ||
                 string.IsNullOrWhiteSpace(BookPrice.Text) ||
@@ -92,12 +90,13 @@ namespace Book_Shop_Management_System.UserControls
             {
                 if (areInputsNotEmpty())
                 {
+                    Random random = new Random();
+                    String BookID = random.Next(1, 1000).ToString();
                     String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                    String DistinationFolder = RootPath + "/Assets/Books Images/" + BookID.Text + ".png";
-
+                    String DistinationFolder = RootPath + "/Assets/Books Images/" + BookID + ".png";
                     String query = "INSERT INTO books (BookID, BookName, BookAuthor, BookPrice, BookQuantity, BookSupplier, BookImage)";
                     String[] values = {
-                        BookID.Text,
+                        BookID,
                         BookName.Text,
                         BookAuthor.Text,
                         BookPrice.Text,

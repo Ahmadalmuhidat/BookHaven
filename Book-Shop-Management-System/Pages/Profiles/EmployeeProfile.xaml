@@ -63,11 +63,6 @@
                            Width="*"
                            Binding="{Binding SaleID}"/>
                         <DataGridTextColumn
-                           Header="Invoice ID"
-                           MinWidth="150"
-                           Width="*"
-                           Binding="{Binding SaleInvoiceID}"/>
-                        <DataGridTextColumn
                            Header="Member ID"
                            MinWidth="150"
                            Width="*"
@@ -87,11 +82,6 @@
                            MinWidth="150"
                            Width="*"
                            Binding="{Binding SaleQuantiy}"/>
-                        <DataGridTextColumn
-                           Header="Amount"
-                           MinWidth="150"
-                           Width="*"
-                           Binding="{Binding SaleAmount}"/>
                         <DataGridTextColumn
                            Header="Sale date"
                            MinWidth="150"

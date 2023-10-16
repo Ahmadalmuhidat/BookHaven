@@ -20,11 +20,9 @@ namespace Book_Shop_Management_System.Pages.Profiles
     public class dSalesDataItem
     {
         public string SaleID { get; set; }
-        public string SaleInvoiceID { get; set; }
         public string SaleMemberID { get; set; }
         public string SaleBookID { get; set; }
         public string SaleQuantity { get; set; }
-        public string SaleAmount { get; set; }
         public string SaleDate { get; set; }
     }
 
@@ -121,11 +119,9 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                 Sales.Items.Add(new dSalesDataItem
                                 {
                                     SaleID = reader["SaleID"].ToString(),
-                                    SaleInvoiceID = reader["SaleInvoiceID"].ToString(),
                                     SaleMemberID = reader["SaleMemberID"].ToString(),
                                     SaleBookID = reader["SaleBookID"].ToString(),
                                     SaleQuantity = reader["SaleQuantity"].ToString(),
-                                    SaleAmount = reader["SaleAmount"].ToString(),
                                     SaleDate = reader["SaleDate"].ToString(),
                                 });
                             }

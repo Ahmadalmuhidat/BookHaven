@@ -32,7 +32,6 @@ namespace Book_Shop_Management_System.UserControls
 
         private void clearInputs()
         {
-            SupplierID.Clear();
             SupplierFullName.Clear();
             SupplierPhoneNumber.Clear();
             SupplierAddressLine1.Clear();
@@ -45,8 +44,7 @@ namespace Book_Shop_Management_System.UserControls
 
         public bool areInputsNotEmpty()
         {
-            if (string.IsNullOrWhiteSpace(SupplierID.Text) ||
-                string.IsNullOrWhiteSpace(SupplierFullName.Text) ||
+            if (string.IsNullOrWhiteSpace(SupplierFullName.Text) ||
                 string.IsNullOrWhiteSpace(SupplierPhoneNumber.Text) ||
                 string.IsNullOrWhiteSpace(SupplierAddressLine1.Text) ||
                 string.IsNullOrWhiteSpace(SupplierAddressLine2.Text) ||
@@ -63,14 +61,15 @@ namespace Book_Shop_Management_System.UserControls
 
         private void submit(object sender, RoutedEventArgs e)
         {
-            String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-            String DistinationPath = RootPath + "/Assets/Suppliers Images/" + SupplierID.Text + ".png";
-
             try
             {
+                Random random = new Random();
+                String SupplierID = random.Next(1, 1000).ToString();
+                String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                String DistinationPath = RootPath + "/Assets/Suppliers Images/" + SupplierID + ".png";
                 String query = "INSERT INTO suppliers (SupplierID, SupplierFullName, SupplierPhoneNumber, SupplierAddressLine1, SupplierAddressLine2, SupplierCity, SupplierState, SupplierCreateDate, SupplierImagePath)";
                 String[] values = {
-                    SupplierID.Text,
+                    SupplierID,
                     SupplierFullName.Text,
                     SupplierPhoneNumber.Text,
                     SupplierAddressLine1.Text,

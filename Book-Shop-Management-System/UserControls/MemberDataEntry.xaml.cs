@@ -32,7 +32,6 @@ namespace Book_Shop_Management_System.UserControls
 
         private void clearInputs()
         {
-            MemberID.Clear();
             MemberFullName.Clear();
             MemberAddressLine1.Clear();
             MemberAddressLine2.Clear();
@@ -48,7 +47,6 @@ namespace Book_Shop_Management_System.UserControls
         public bool areInputsNotEmpty()
         {
             if (string.IsNullOrWhiteSpace(MemberImage.Text) ||
-                string.IsNullOrWhiteSpace(MemberID.Text) ||
                 string.IsNullOrWhiteSpace(MemberFullName.Text) ||
                 string.IsNullOrWhiteSpace(MemberAddressLine1.Text) ||
                 string.IsNullOrWhiteSpace(MemberAddressLine2.Text) ||
@@ -73,12 +71,13 @@ namespace Book_Shop_Management_System.UserControls
             {
                 if (areInputsNotEmpty())
                 {
+                    Random random = new Random();
+                    String MemberID = random.Next(1, 1000).ToString();
                     String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                    String DistinationPath = RootPath + "/Assets/Members Images/" + MemberID.Text + ".png";
-
+                    String DistinationPath = RootPath + "/Assets/Members Images/" + MemberID + ".png";
                     String query = "INSERT INTO members (MemberID, MemberFullName, MemberAddressLine1, MemberAddressLine2, MemberAddressCity, MemberAddressState, MemberPhoneNumber, MemberBeginDate, MemberEndDate, MemberValid, MemberImagePath)";
                     String[] values = {
-                        MemberID.Text,
+                        MemberID,
                         MemberFullName.Text,
                         MemberAddressLine1.Text,
                         MemberAddressLine2.Text,

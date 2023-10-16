@@ -4,13 +4,13 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace Book_Shop_Management_System.UserControls
 {
     public class SaleComboBoxItem
     {
         public string DisplayText { get; set; }
         public string Value { get; set; }
+        public string Price { get; set; }
     }
 
     public partial class SaleDataEntry : UserControl
@@ -75,7 +75,7 @@ namespace Book_Shop_Management_System.UserControls
         {
             try
             {
-                String query = "select BookID, BookName from books";
+                String query = "select BookID, BookName, BookPrice from books";
                 using (var reader = DB.FetchData(query))
                 {
                     foreach (DataRow row in reader.Rows)
@@ -83,7 +83,8 @@ namespace Book_Shop_Management_System.UserControls
                         SaleBook.Items.Add(new SaleComboBoxItem
                         {
                             DisplayText = row["BookName"].ToString(),
-                            Value = row["BookID"].ToString()
+                            Value = row["BookID"].ToString(),
+                            Price = row["BookPrice"].ToString()
                         });
                     }
                 }
@@ -96,10 +97,7 @@ namespace Book_Shop_Management_System.UserControls
 
         public void clearInputs()
         {
-            SaleID.Clear();
-            SaleInvoiceID.Clear();
             SaleQuantity.Clear();
-            SaleAmount.Clear();
             SaleMember.SelectedValue = null;
             SaleBook.SelectedValue = null;
             SaleEmployee.SelectedValue = null;
@@ -108,13 +106,9 @@ namespace Book_Shop_Management_System.UserControls
 
         public bool areInputsNotEmpty()
         {
-            if (string.IsNullOrWhiteSpace(SaleID.Text) ||
-                string.IsNullOrWhiteSpace(SaleBook.SelectedValue.ToString()) ||
-                string.IsNullOrWhiteSpace(SaleMember.SelectedValue.ToString()) ||
+            if (string.IsNullOrWhiteSpace(SaleBook.SelectedValue.ToString()) ||
                 string.IsNullOrWhiteSpace(SaleEmployee.SelectedValue.ToString()) ||
                 string.IsNullOrWhiteSpace(SaleQuantity.Text) ||
-                string.IsNullOrWhiteSpace(SaleInvoiceID.Text) ||
-                string.IsNullOrWhiteSpace(SaleAmount.Text) ||
                 SaleDate.SelectedDate == null
                 )
             {
@@ -124,26 +118,40 @@ namespace Book_Shop_Management_System.UserControls
             return true;
         }
 
+        private String CalculateTotal(SaleComboBoxItem selectedItem, String quantity)
+        {
+            if (int.TryParse(quantity, out int saleQuantity) && decimal.TryParse(selectedItem.Price, out decimal price))
+            {
+                decimal totalPrice = price * saleQuantity;
+                return totalPrice.ToString();
+            }
+            return null;
+        }
+
+
         public void submit(object sender, RoutedEventArgs e)
         {
             try
             {
                 if(areInputsNotEmpty())
                 {
-                    String query = "INSERT INTO sales (SaleID, SaleInvoiceID, SaleMemberID, SaleBookID, SaleEmployeeID, SaleQuantity, SaleAmount, SaleDate)";
+                    Random random = new Random();
+                    String SaleID = random.Next(1, 1000).ToString();
+                    SaleComboBoxItem selectedItem = (SaleComboBoxItem)SaleBook.SelectedItem;
+                    String Total = CalculateTotal(selectedItem, SaleQuantity.Text);
+                    String query = "INSERT INTO sales (SaleID, SaleMemberID, SaleBookID, SaleEmployeeID, SaleQuantity, SaleDate, SaleTotal)";
                     String[] values = {
-                    SaleID.Text,
-                    SaleInvoiceID.Text,
-                    SaleMember.SelectedValue.ToString(),
-                    SaleBook.SelectedValue.ToString(),
-                    SaleEmployee.SelectedValue.ToString(),
-                    SaleQuantity.Text,
-                    SaleAmount.Text,
-                    SaleDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
-                };
-
+                        SaleID,
+                        SaleMember.SelectedValue.ToString(),
+                        SaleBook.SelectedValue.ToString(),
+                        SaleEmployee.SelectedValue.ToString(),
+                        SaleQuantity.Text,
+                        SaleDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                        Total
+                    };
                     if (DB.InsertData(query, values))
                     {
+                        MessageBox.Show("Total: " + Total);
                         MessageBox.Show("Data inserted successfully!");
                         clearInputs();
                     }

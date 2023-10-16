@@ -82,11 +82,6 @@
                            MinWidth="150"
                            Width="*"
                            Binding="{Binding PurchaseReceived}"/>
-                        <DataGridTextColumn
-                           Header="Invoice"
-                           MinWidth="150"
-                           Width="*"
-                           Binding="{Binding PurchaseInvoice}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

@@ -15,7 +15,6 @@ namespace Book_Shop_Management_System.Pages
         public string PurchaseDate { get; set; }
         public string PurchaseETA { get; set; }
         public string PurchaseReceived { get; set; }
-        public string PurchaseInvoice { get; set; }
     }
 
     public partial class PurchasesDatabase : Page
@@ -45,7 +44,6 @@ namespace Book_Shop_Management_System.Pages
                             PurchaseDate = row["PurchaseDate"].ToString(),
                             PurchaseETA = row["PurchaseETA"].ToString(),
                             PurchaseReceived = row["PurchaseReceived"].ToString(),
-                            PurchaseInvoice = row["PurchaseInvoice"].ToString(),
                         });
                     }
                 }

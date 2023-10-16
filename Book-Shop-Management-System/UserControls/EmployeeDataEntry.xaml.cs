@@ -31,7 +31,6 @@ namespace Book_Shop_Management_System.UserControls
 
         public void clearInputs()
         {
-            EmployeeID.Clear();
             EmployeeFullName.Clear();
             EmployeeAddressLine1.Clear();
             EmployeeAddressLine2.Clear();
@@ -47,7 +46,6 @@ namespace Book_Shop_Management_System.UserControls
         public bool areInputsNotEmpty()
         {
             if (string.IsNullOrWhiteSpace(EmployeeImage.Text) ||
-                string.IsNullOrWhiteSpace(EmployeeID.Text) ||
                 string.IsNullOrWhiteSpace(EmployeeFullName.Text) ||
                 string.IsNullOrWhiteSpace(EmployeeAddressLine1.Text) ||
                 string.IsNullOrWhiteSpace(EmployeeAddressLine2.Text) ||
@@ -69,12 +67,13 @@ namespace Book_Shop_Management_System.UserControls
             {
                 if (areInputsNotEmpty())
                 {
+                    Random random = new Random();
+                    String EmployeeID = random.Next(1, 1000).ToString();
                     String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                    String DistinationFolder = RootPath + "/Assets/Employees Images/" + EmployeeID.Text + ".png";
-
+                    String DistinationFolder = RootPath + "/Assets/Employees Images/" + EmployeeID + ".png";
                     String query = "INSERT INTO employees (EmployeeID, EmployeeFullName, EmployeeAdressLine1, EmployeeAdressLine2, EmployeeAdressCity, EmployeeAdressState, EmployeePhoneNumber, EmployeeDateOfJoining, EmployeeSalary, EmployeeMGRStatus, EmployeeImagePath)";
                     String[] values = {
-                        EmployeeID.Text,
+                        EmployeeID,
                         EmployeeFullName.Text,
                         EmployeeAddressLine1.Text,
                         EmployeeAddressLine2.Text,

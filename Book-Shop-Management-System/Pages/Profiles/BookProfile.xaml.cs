@@ -29,7 +29,6 @@ namespace Book_Shop_Management_System.Pages.Profiles
         public string PurchaseDate { get; set; }
         public string PurchaseETA { get; set; }
         public string PurchaseReceived { get; set; }
-        public string PurchaseInvoice { get; set; }
     }
 
     public partial class BookProfile : Page
@@ -73,7 +72,6 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                     PurchaseDate = reader["PurchaseDate"].ToString(),
                                     PurchaseETA = reader["PurchaseETA"].ToString(),
                                     PurchaseReceived = reader["PurchaseReceived"].ToString(),
-                                    PurchaseInvoice = reader["PurchaseInvoice"].ToString(),
                                 });
                             }
                         }

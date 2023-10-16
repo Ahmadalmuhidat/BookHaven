@@ -38,7 +38,7 @@ namespace Book_Shop_Management_System.Pages
         {
             try
             {
-                String query = "select * from members";
+                String query = "select * from members where MemberID>0";
                 using (var reader = DB.FetchData(query))
                 {
                     foreach (DataRow row in reader.Rows)

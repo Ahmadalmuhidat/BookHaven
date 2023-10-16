@@ -39,7 +39,7 @@ namespace Book_Shop_Management_System.Pages
         {
             try
             {
-                String query = "select * from employees";
+                String query = "select * from employees where EmployeeID>0";
                 using (var reader = DB.FetchData(query))
                 {
                     foreach (DataRow row in reader.Rows)

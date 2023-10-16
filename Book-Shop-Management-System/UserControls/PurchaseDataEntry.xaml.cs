@@ -26,11 +26,9 @@ namespace Book_Shop_Management_System.UserControls
 
         public void clearInputs()
         {
-            PurchaseID.Clear();
             PurchaseQuantity.Clear();
             PurchaseETA.Clear();
             PurchaseReceived.Clear();
-            PurchaseInvoice.Clear();
             PurchaseDate.SelectedDate = null;
             PurchaseBookID.SelectedValue = null;
             PurchaseSupplierID.SelectedValue = null;
@@ -84,13 +82,11 @@ namespace Book_Shop_Management_System.UserControls
 
         public bool areInputsNotEmpty()
         {
-            if (string.IsNullOrWhiteSpace(PurchaseID.Text) ||
-                string.IsNullOrWhiteSpace(PurchaseBookID.SelectedValue.ToString()) ||
+            if (string.IsNullOrWhiteSpace(PurchaseBookID.SelectedValue.ToString()) ||
                 string.IsNullOrWhiteSpace(PurchaseSupplierID.SelectedValue.ToString()) ||
                 string.IsNullOrWhiteSpace(PurchaseQuantity.Text) ||
                 string.IsNullOrWhiteSpace(PurchaseETA.Text) ||
                 string.IsNullOrWhiteSpace(PurchaseReceived.Text) ||
-                string.IsNullOrWhiteSpace(PurchaseInvoice.Text) ||
                 PurchaseDate.SelectedDate == null
                 )
             {
@@ -106,16 +102,17 @@ namespace Book_Shop_Management_System.UserControls
             {
                 if(areInputsNotEmpty())
                 {
-                    String query = "INSERT INTO purchases (PurchaseID, PurchaseBookID, PurchaseSupplierID, PurchaseQuantity, PurchaseDate, PurchaseETA, PurchaseReceived, PurchaseInvoice)";
+                    Random random = new Random();
+                    String PurchaseID = random.Next(1, 1000).ToString();
+                    String query = "INSERT INTO purchases (PurchaseID, PurchaseBookID, PurchaseSupplierID, PurchaseQuantity, PurchaseDate, PurchaseETA, PurchaseReceived)";
                     String[] values = {
-                        PurchaseID.Text,
+                        PurchaseID,
                         PurchaseBookID.SelectedValue.ToString(),
                         PurchaseSupplierID.SelectedValue.ToString(),
                         PurchaseQuantity.Text,
                         PurchaseDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
                         PurchaseETA.Text,
                         PurchaseReceived.Text,
-                        PurchaseInvoice.Text,
                     };
 
                     if (DB.InsertData(query, values))

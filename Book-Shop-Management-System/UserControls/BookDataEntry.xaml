@@ -21,14 +21,6 @@
                     </Grid>
                     <Grid Margin="0, 10, 0, 0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".30*"></ColumnDefinition>
-                            <ColumnDefinition Width=".70*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Book ID" FontWeight="Bold"/>
-                        <TextBox x:Name="BookID" Grid.Column="1" Width="300"/>
-                    </Grid>
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width=".40*"></ColumnDefinition>
                             <ColumnDefinition Width=".60*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>

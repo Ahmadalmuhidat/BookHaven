@@ -12,22 +12,14 @@
                 <TextBlock Text="New Member Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
                 <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
                     <Grid Margin="0, 10, 0, 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".40*"></ColumnDefinition>
-                        <ColumnDefinition Width=".60*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Select Member Image" Click="SelectImage"/>
-                    <TextBox x:Name="MemberImage" Grid.Column="1" Width="300"/>
-                </Grid>
-                        <Grid Margin="0, 10, 0, 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".40*"></ColumnDefinition>
-                                <ColumnDefinition Width=".60*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Member ID" FontWeight="Bold"/>
-                            <TextBox x:Name="MemberID" Grid.Column="1" Width="300"/>
-                        </Grid>
-                        <Grid Margin="0, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"></ColumnDefinition>
+                            <ColumnDefinition Width=".60*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Select Member Image" Click="SelectImage"/>
+                        <TextBox x:Name="MemberImage" Grid.Column="1" Width="300"/>
+                    </Grid>
+                    <Grid Margin="0, 10, 0, 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".40*"></ColumnDefinition>
                                 <ColumnDefinition Width=".60*"></ColumnDefinition>
@@ -99,7 +91,7 @@
                         <Label Grid.Column="0" Content="Member Valid" FontWeight="Bold"/>
                         <TextBox x:Name="MemberValid" Grid.Column="1" Width="300"/>
                     </Grid>
-                    <Button Content="submit" Click="submit" Margin="0, 10, 0, 0"/>
+                    <Button Content="submit" FontSize="15" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -12,13 +12,12 @@ namespace Book_Shop_Management_System.Pages
         public class SalesDataItem
         {
             public string SaleID { get; set; }
-            public string SaleInvoiceID { get; set; }
             public string SaleMemberID { get; set; }
             public string SaleBookID { get; set; }
             public string SaleQuantity { get; set; }
-            public string SaleAmount { get; set; }
             public string SaleDate { get; set; }
             public string SaleEmployee { get; set; }
+            public string SaleTotal { get; set; }
         }
 
         private MySQLConnector DB = new MySQLConnector();
@@ -41,13 +40,12 @@ namespace Book_Shop_Management_System.Pages
                         Sales.Items.Add(new SalesDataItem
                         {
                             SaleID = row["SaleID"].ToString(),
-                            SaleInvoiceID = row["SaleInvoiceID"].ToString(),
                             SaleMemberID = row["MemberFullName"].ToString(),
                             SaleBookID = row["BookName"].ToString(),
                             SaleQuantity = row["SaleQuantity"].ToString(),
-                            SaleAmount = row["SaleAmount"].ToString(),
                             SaleDate = row["SaleDate"].ToString(),
                             SaleEmployee = row["EmployeeFullName"].ToString(),
+                            SaleTotal = row["SaleTotal"].ToString(),
                         });
                     }
                 }
