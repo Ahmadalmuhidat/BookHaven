@@ -1,69 +1,72 @@
 Create a MySQL Database
 
-DataBase Name : Management
+DataBase Name : book_system
 
 And Tables :
 
-Books
+books
 
-int id			// Primary Key
-string name
-string auth
-int price
-int qty
+BookID varchar(200) 
+BookName varchar(200) 
+BookAuthor varchar(200) 
+BookPrice varchar(200) 
+BookQuantity int 
+BookSupplier varchar(200) 
+BookImage varchar(200)
+
 
 suppliers
 
-int id				//Primary Key
-string name
-long int phn
-string addr_line1
-string addr_line2
-string addr_city
-string addr_state
+SupplierID varchar(200) 
+SupplierFullName varchar(200) 
+SupplierPhoneNumber varchar(200) 
+SupplierAddressLine1 varchar(200) 
+SupplierAddressLine2 varchar(200) 
+SupplierCity varchar(200) 
+SupplierState varchar(200) 
+SupplierCreateDate date 
+supplierImagePath varchar(200)
 
 purchases
 
-int ord_id			//Primary Key
-int book_id		    //FK ref (books)
-int sup_id			//FK ref (suppliers)
-int qty
-date dt_ordered
-int eta
-char received		// Check(T or C or F) def (F)
-int inv
+PurchaseID varchar(200) 
+PurchaseBookID varchar(200) 
+PurchaseSupplierID varchar(200) 
+PurchaseQuantity varchar(200) 
+PurchaseETA varchar(200) 
+PurchaseReceived varchar(200) 
+PurchaseDate date
 
 employees
 
-int id				//Primary Key
-string name
-string addr_line1
-string addr_line2
-string addr_city
-string addr_state
-long int phn
-date date_of_joining
-long int salary
-string mgr_status	//check(T or F) def f
+BookID varchar(200) 
+BookName varchar(200) 
+BookAuthor varchar(200) 
+BookPrice varchar(200) 
+BookQuantity int 
+BookSupplier varchar(200) 
+BookImage varchar(200)
 
 members
 
-int id				//Primary Key
-string name
-string addr_line1
-string addr_line2
-string addr_city
-string addr_state
-long int phn
-date beg_date
-date end_date
-string valid
+MemberID varchar(200) 
+MemberFullName varchar(200) 
+MemberAddressLine1 varchar(200) 
+MemberAddressLine2 varchar(200) 
+MemberAddressCity varchar(200) 
+MemberAddressState varchar(200) 
+MemberPhoneNumber varchar(200) 
+MemberEndDate date 
+MemberBeginDate date 
+MemberValid varchar(200) 
+MemberImagePath varchar(200)
 
 sales
 
-int invoice_id		//Primary key
-int member_id		//FK ref member(id)
-int book_id		//FK ref books(id)
-int qty
-int amount
-date date_s
+SaleID varchar(200) 
+SaleMemberID varchar(200) 
+SaleBookID varchar(200) 
+SaleEmployeeID varchar(200) 
+SaleQuantity int 
+SaleDate date 
+SaleTotal int
