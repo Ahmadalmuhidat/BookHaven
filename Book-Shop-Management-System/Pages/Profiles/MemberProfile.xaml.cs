@@ -110,7 +110,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from sales WHERE SaleEmployeeID=@param1";
+                        cmd.CommandText = "select * from sales WHERE SaleMemberID=@param1";
                         cmd.Parameters.AddWithValue("@param1", EID);
                         using (var reader = cmd.ExecuteReader())
                         {
