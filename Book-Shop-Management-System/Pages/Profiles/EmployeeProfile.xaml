@@ -81,7 +81,7 @@
                            Header="Quantiy"
                            MinWidth="150"
                            Width="*"
-                           Binding="{Binding SaleQuantiy}"/>
+                           Binding="{Binding SaleQuantity}"/>
                         <DataGridTextColumn
                            Header="Sale date"
                            MinWidth="150"

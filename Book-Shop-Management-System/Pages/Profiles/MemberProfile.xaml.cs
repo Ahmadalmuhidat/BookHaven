@@ -23,6 +23,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
         public string SaleMemberID { get; set; }
         public string SaleBookID { get; set; }
         public string SaleQuantity { get; set; }
+        public string SaleEmployeeID { get; set; }
         public string SaleDate { get; set; }
     }
 
@@ -121,6 +122,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                     SaleID = reader["SaleID"].ToString(),
                                     SaleMemberID = reader["SaleMemberID"].ToString(),
                                     SaleBookID = reader["SaleBookID"].ToString(),
+                                    SaleEmployeeID = reader["SaleEmployeeID"].ToString(),
                                     SaleQuantity = reader["SaleQuantity"].ToString(),
                                     SaleDate = reader["SaleDate"].ToString(),
                                 });
