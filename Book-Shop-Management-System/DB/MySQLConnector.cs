@@ -100,13 +100,37 @@ namespace Book_Shop_Management_System.DB
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = query;
-                        /*
-                        for (int i = 0; i < values.Length; i++)
-                        {
-                            cmd.Parameters.AddWithValue("@param" + (i + 1), values[i]);
-                        }
-                        */
+                        int rowsAffected = cmd.ExecuteNonQuery();
 
+                        if (rowsAffected > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+        }
+
+        public bool UpdateData(String query)
+        {
+            try
+            {
+                using (var conn = this.Connector)
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = query;
                         int rowsAffected = cmd.ExecuteNonQuery();
 
                         if (rowsAffected > 0)

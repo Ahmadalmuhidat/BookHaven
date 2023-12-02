@@ -53,12 +53,7 @@
                            Width="*"
                            Binding="{Binding PurchaseID}"/>
                         <DataGridTextColumn
-                           Header="Book ID"
-                           MinWidth="150"
-                           Width="*"
-                           Binding="{Binding PurchaseBookID}"/>
-                        <DataGridTextColumn
-                           Header="Supplier ID"
+                           Header="Supplier"
                            MinWidth="150"
                            Width="*"
                            Binding="{Binding PurchaseSupplierID}"/>

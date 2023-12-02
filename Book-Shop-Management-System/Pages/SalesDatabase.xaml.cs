@@ -1,6 +1,8 @@
 ﻿using Book_Shop_Management_System.DB;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +28,50 @@ namespace Book_Shop_Management_System.Pages
         {
             InitializeComponent();
             getSales();
+        }
+
+        public void search(object sender, RoutedEventArgs e)
+        {
+            String searchQuery = search_input.Text;
+            String query = "SELECT * FROM sales INNER JOIN members ON members.MemberID=SaleMemberID INNER JOIN books ON books.BookID=SaleBookID INNER JOIN employees ON employees.EmployeeID=SaleEmployeeID WHERE BookName LIKE '%" + searchQuery + "%' OR MemberFullName LIKE'%" + searchQuery + "%' OR EmployeeFullName LIKE'%" + searchQuery + "%'";
+
+            using (var reader = DB.FetchData(query))
+            {
+                try
+                {
+                    if (reader.Rows.Count > 0)
+                    {
+                        Sales.Items.Clear();
+
+                        foreach (DataRow row in reader.Rows)
+                        {
+                            Sales.Items.Add(new SalesDataItem
+                            {
+                                SaleID = row["SaleID"].ToString(),
+                                SaleMemberID = row["MemberFullName"].ToString(),
+                                SaleBookID = row["BookName"].ToString(),
+                                SaleQuantity = row["SaleQuantity"].ToString(),
+                                SaleDate = row["SaleDate"].ToString(),
+                                SaleEmployee = row["EmployeeFullName"].ToString(),
+                                SaleTotal = row["SaleTotal"].ToString(),
+                            });
+                        }
+                    }
+                    else if (string.IsNullOrWhiteSpace(searchQuery))
+                    {
+                        Sales.Items.Clear();
+                        getSales();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sorry, book has not been found!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
         }
 
         public void getSales()
@@ -60,26 +106,32 @@ namespace Book_Shop_Management_System.Pages
         {
             try
             {
-                SalesDataItem classObj = Sales.SelectedItem as SalesDataItem;
-                String id = classObj.SaleID;
-                String[] values = { id };
-                String query = "DELETE FROM sales WHERE SaleID=" + id;
+                List<SalesDataItem> selectedSales = Sales.SelectedItems.Cast<SalesDataItem>().ToList();
 
-                if (DB.DeleteData(query))
+                foreach (SalesDataItem classObj in selectedSales)
                 {
-                    MessageBox.Show("Data has beem deleted successfully!");
-                    Sales.Items.Clear();
-                    getSales();
+                    String id = classObj.SaleID;
+                    String query = "DELETE FROM sales WHERE SaleID=" + id;
+
+                    if (DB.DeleteData(query))
+                    {
+                        Console.WriteLine("Sale deleted successfully for SaleID: " + id);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows were deleted for SaleID: " + id);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("No rows were deleted. Check your data or database.");
-                }
+
+                MessageBox.Show("Data has been deleted successfully!");
+                Sales.Items.Clear();
+                getSales(); // Refresh or update your sale list after deletion
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
     }
 }

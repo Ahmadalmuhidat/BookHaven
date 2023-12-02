@@ -13,7 +13,6 @@ namespace Book_Shop_Management_System.Pages.Profiles
     {
         public string PurchaseID { get; set; }
         public string PurchaseBookID { get; set; }
-        public string PurchaseSupplierID { get; set; }
         public string PurchaseQuantity { get; set; }
         public string PurchaseDate { get; set; }
         public string PurchaseETA { get; set; }
@@ -46,7 +45,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from purchases WHERE PurchaseSupplierID=@param1";
+                        cmd.CommandText = "SELECT * FROM purchases INNER JOIN books ON books.BookID = purchases.PurchaseBookID WHERE PurchaseSupplierID=@param1";
                         cmd.Parameters.AddWithValue("@param1", BID);
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -55,8 +54,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                 Purchases.Items.Add(new cPurchasesDataItem
                                 {
                                     PurchaseID = reader["PurchaseID"].ToString(),
-                                    PurchaseBookID = reader["PurchaseBookID"].ToString(),
-                                    PurchaseSupplierID = reader["PurchaseSupplierID"].ToString(),
+                                    PurchaseBookID = reader["BookName"].ToString(),
                                     PurchaseQuantity = reader["PurchaseQuantity"].ToString(),
                                     PurchaseDate = reader["PurchaseDate"].ToString(),
                                     PurchaseETA = reader["PurchaseETA"].ToString(),

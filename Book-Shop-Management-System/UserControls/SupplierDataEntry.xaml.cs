@@ -26,7 +26,7 @@ namespace Book_Shop_Management_System.UserControls
             if (openFileDialog.ShowDialog() == true)
             {
                 this.selectedImagePath = openFileDialog.FileName;
-                imagePreview.Text = selectedImagePath;
+                SupplierImage.Text = selectedImagePath;
             }
         }
 
@@ -39,12 +39,13 @@ namespace Book_Shop_Management_System.UserControls
             SupplierCity.Clear();
             SupplierState.Clear();
             SupplierCreationDate.SelectedDate = null;
-            imagePreview.Clear();
+            SupplierImage.Clear();
         }
 
         public bool areInputsNotEmpty()
         {
-            if (string.IsNullOrWhiteSpace(SupplierFullName.Text) ||
+            if (string.IsNullOrWhiteSpace(SupplierImage.Text) ||
+                string.IsNullOrWhiteSpace(SupplierFullName.Text) ||
                 string.IsNullOrWhiteSpace(SupplierPhoneNumber.Text) ||
                 string.IsNullOrWhiteSpace(SupplierAddressLine1.Text) ||
                 string.IsNullOrWhiteSpace(SupplierAddressLine2.Text) ||
@@ -63,12 +64,14 @@ namespace Book_Shop_Management_System.UserControls
         {
             try
             {
-                Random random = new Random();
-                String SupplierID = random.Next(1, 1000).ToString();
-                String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                String DistinationPath = RootPath + "/Assets/Suppliers Images/" + SupplierID + ".png";
-                String query = "INSERT INTO suppliers (SupplierID, SupplierFullName, SupplierPhoneNumber, SupplierAddressLine1, SupplierAddressLine2, SupplierCity, SupplierState, SupplierCreateDate, SupplierImagePath)";
-                String[] values = {
+                if (areInputsNotEmpty())
+                {
+                    Random random = new Random();
+                    String SupplierID = random.Next(1, 1000).ToString();
+                    String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    String DistinationPath = RootPath + "/Assets/Suppliers Images/" + SupplierID + ".png";
+                    String query = "INSERT INTO suppliers (SupplierID, SupplierFullName, SupplierPhoneNumber, SupplierAddressLine1, SupplierAddressLine2, SupplierCity, SupplierState, SupplierCreateDate, SupplierImagePath)";
+                    String[] values = {
                     SupplierID,
                     SupplierFullName.Text,
                     SupplierPhoneNumber.Text,
@@ -79,17 +82,17 @@ namespace Book_Shop_Management_System.UserControls
                     SupplierCreationDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
                     DistinationPath
                 };
-
-                if (DB.InsertData(query, values))
-                {
-                    System.IO.File.Copy(selectedImagePath, DistinationPath, true);
-                    selectedImagePath = "";
-                    MessageBox.Show("Data inserted successfully!");
-                    clearInputs();
-                }
-                else
-                {
-                    MessageBox.Show("No rows were inserted. Check your data or database.");
+                    if (DB.InsertData(query, values))
+                    {
+                        System.IO.File.Copy(selectedImagePath, DistinationPath, true);
+                        selectedImagePath = "";
+                        MessageBox.Show("Data inserted successfully!");
+                        clearInputs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No rows were inserted. Check your data or database.");
+                    }
                 }
             }
             catch (Exception ex)

@@ -1,8 +1,10 @@
 ﻿using Book_Shop_Management_System.DB;
 using Book_Shop_Management_System.Pages.Profiles;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,11 +33,55 @@ namespace Book_Shop_Management_System.Pages
             getBooks();
         }
 
+        public void search(object sender, RoutedEventArgs e)
+        {
+            String searchQuery = search_input.Text;
+            String query = "SELECT * FROM books WHERE BookName LIKE '%" + searchQuery + "%'";
+
+            using (var reader = DB.FetchData(query))
+            {
+                try
+                {
+                    if (reader.Rows.Count > 0)
+                    {
+                        books_table.Items.Clear();
+
+                        foreach (DataRow row in reader.Rows)
+                        {
+                            BID = row["BookID"].ToString();
+                            books_table.Items.Add(new BooksDataItem
+                            {
+                                BookID = BID,
+                                BookName = row["BookName"].ToString(),
+                                BookAuthor = row["BookAuthor"].ToString(),
+                                BookPrice = row["BookPrice"].ToString(),
+                                BookQuantity = row["BookQuantity"].ToString(),
+                                ButtonBookID = row["BookID"].ToString()
+                            });
+                        }
+                    }
+                    else if (string.IsNullOrWhiteSpace(searchQuery))
+                    {
+                        books_table.Items.Clear();
+                        getBooks();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sorry, book has not been found!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+
         public void getBooks()
         {
             try
             {
-                String query = "select * from books";
+                String query = "SELECT * FROM books";
                 using (var reader = DB.FetchData(query))
                 {
                     foreach (DataRow row in reader.Rows)
@@ -43,7 +89,7 @@ namespace Book_Shop_Management_System.Pages
                         BID = row["BookID"].ToString();
                         books_table.Items.Add(new BooksDataItem
                         {
-                            BookID = row["BookID"].ToString(),
+                            BookID = BID,
                             BookName = row["BookName"].ToString(),
                             BookAuthor = row["BookAuthor"].ToString(),
                             BookPrice = row["BookPrice"].ToString(),
@@ -74,39 +120,43 @@ namespace Book_Shop_Management_System.Pages
         {
             try
             {
-                BooksDataItem classObj = books_table.SelectedItem as BooksDataItem;
-                String id = classObj.BookID;
-                String[] values = { id };
-                String query = "DELETE FROM books WHERE BookID=" + id;
+                List<BooksDataItem> selectedBooks = books_table.SelectedItems.Cast<BooksDataItem>().ToList();
 
-                if (DB.DeleteData(query))
+                foreach (BooksDataItem classObj in selectedBooks)
                 {
-                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                    string DistinationFolder = RootPath + "/Assets/Books Images/" + id + ".png";
+                    String id = classObj.BookID;
+                    String query = "DELETE FROM books WHERE BookID=" + id;
 
-                    if (File.Exists(DistinationFolder))
+                    if (DB.DeleteData(query))
                     {
-                        File.Delete(DistinationFolder);
-                        Console.WriteLine("File deleted successfully.");
+                        string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                        string DistinationFolder = RootPath + "/Assets/Books Images/" + id + ".png";
+
+                        if (File.Exists(DistinationFolder))
+                        {
+                            File.Delete(DistinationFolder);
+                            Console.WriteLine("File deleted successfully for BookID: " + id);
+                        }
+                        else
+                        {
+                            Console.WriteLine("File not found for BookID: " + id);
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("File not found.");
+                        Console.WriteLine("No rows were deleted for BookID: " + id);
                     }
+                }
 
-                    MessageBox.Show("Data has beem deleted successfully!");
-                    books_table.Items.Clear();
-                    getBooks();
-                }
-                else
-                {
-                    MessageBox.Show("No rows were deleted. Check your data or database.");
-                }
+                MessageBox.Show("Data has been deleted successfully!");
+                books_table.Items.Clear();
+                getBooks();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
     }
 }

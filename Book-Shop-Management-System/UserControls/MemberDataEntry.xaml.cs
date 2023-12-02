@@ -38,7 +38,6 @@ namespace Book_Shop_Management_System.UserControls
             MemberAddressCity.Clear();
             MemberAddressState.Clear();
             MemberPhoneNumber.Clear();
-            MemberValid.Clear();
             MemberBeginDate.SelectedDate = null;
             MemberEndDate.SelectedDate = null;
             MemberImage.Clear();
@@ -53,7 +52,6 @@ namespace Book_Shop_Management_System.UserControls
                 string.IsNullOrWhiteSpace(MemberAddressCity.Text) ||
                 string.IsNullOrWhiteSpace(MemberAddressState.Text) ||
                 string.IsNullOrWhiteSpace(MemberPhoneNumber.Text) ||
-                string.IsNullOrWhiteSpace(MemberValid.Text) ||
                 MemberBeginDate.SelectedDate == null ||
                 MemberEndDate.SelectedDate == null
 
@@ -75,7 +73,7 @@ namespace Book_Shop_Management_System.UserControls
                     String MemberID = random.Next(1, 1000).ToString();
                     String RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
                     String DistinationPath = RootPath + "/Assets/Members Images/" + MemberID + ".png";
-                    String query = "INSERT INTO members (MemberID, MemberFullName, MemberAddressLine1, MemberAddressLine2, MemberAddressCity, MemberAddressState, MemberPhoneNumber, MemberBeginDate, MemberEndDate, MemberValid, MemberImagePath)";
+                    String query = "INSERT INTO members (MemberID, MemberFullName, MemberAddressLine1, MemberAddressLine2, MemberAddressCity, MemberAddressState, MemberPhoneNumber, MemberBeginDate, MemberEndDate, MemberImagePath)";
                     String[] values = {
                         MemberID,
                         MemberFullName.Text,
@@ -86,7 +84,6 @@ namespace Book_Shop_Management_System.UserControls
                         MemberPhoneNumber.Text,
                         MemberBeginDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
                         MemberEndDate.SelectedDate.Value.ToString("yyyy-MM-dd"),
-                        MemberValid.Text,
                         DistinationPath
                     };
 

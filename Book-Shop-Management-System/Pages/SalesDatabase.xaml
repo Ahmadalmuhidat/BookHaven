@@ -20,7 +20,7 @@
             </StackPanel>
         </Border>
         <StackPanel x:Name="table_actions" Grid.Row="1" Margin="0, 0, 0, 10" Orientation="Horizontal">
-            <Button x:Name="search_button" Content="Search" Width="100"></Button>
+            <Button x:Name="search_button" Content="Search" Width="100" Click="search"/>
             <TextBox x:Name="search_input" Width="300"/>
             <Button x:Name="delete_button" Content="Delete Selected" Width="100" Margin="20,0,0,0" Click="delete"/>
         </StackPanel>

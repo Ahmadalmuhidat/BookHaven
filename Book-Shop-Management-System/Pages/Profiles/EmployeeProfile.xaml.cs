@@ -12,7 +12,6 @@ namespace Book_Shop_Management_System.Pages.Profiles
     {
         public string SaleID { get; set; }
         public string SaleMemberID { get; set; }
-        public string SaleEmployeeID { get; set; }
         public string SaleBookID { get; set; }
         public string SaleQuantity { get; set; }
         public string SaleDate { get; set; }
@@ -102,7 +101,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from sales WHERE SaleEmployeeID=@param1";
+                        cmd.CommandText = "SELECT * FROM sales INNER JOIN books ON books.BookID = sales.SaleBookID INNER JOIN members ON members.MemberID = sales.SaleMemberID WHERE SaleEmployeeID = @param1";
                         cmd.Parameters.AddWithValue("@param1", EID);
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -111,9 +110,8 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                 Sales.Items.Add(new SalesDataItem
                                 {
                                     SaleID = reader["SaleID"].ToString(),
-                                    SaleMemberID = reader["SaleMemberID"].ToString(),
-                                    SaleBookID = reader["SaleBookID"].ToString(),
-                                    SaleEmployeeID = reader["SaleEmployeeID"].ToString(),
+                                    SaleMemberID = reader["MemberFullName"].ToString(),
+                                    SaleBookID = reader["BookName"].ToString(),
                                     SaleQuantity = reader["SaleQuantity"].ToString(),
                                     SaleDate = reader["SaleDate"].ToString(),
                                 });

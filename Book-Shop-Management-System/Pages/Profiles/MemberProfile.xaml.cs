@@ -20,7 +20,6 @@ namespace Book_Shop_Management_System.Pages.Profiles
     public class dSalesDataItem
     {
         public string SaleID { get; set; }
-        public string SaleMemberID { get; set; }
         public string SaleBookID { get; set; }
         public string SaleQuantity { get; set; }
         public string SaleEmployeeID { get; set; }
@@ -43,6 +42,11 @@ namespace Book_Shop_Management_System.Pages.Profiles
             MemberImage.Source = new BitmapImage(new Uri(AssetsPath));
         }
 
+        public static bool IsMembershipValid(DateTime beginDate, DateTime endDate, DateTime checkDate)
+        {
+            return (checkDate >= beginDate && checkDate <= endDate);
+        }
+
         public void getInfo(string EID)
         {
             try
@@ -59,6 +63,11 @@ namespace Book_Shop_Management_System.Pages.Profiles
                         {
                             while (reader.Read())
                             {
+                                DateTime todayDate = DateTime.Now;
+                                DateTime beginDate = DateTime.Parse(reader["MemberBeginDate"].ToString());
+                                DateTime endDate = DateTime.Parse(reader["MemberEndDate"].ToString());
+                                bool membership = IsMembershipValid(beginDate, endDate, todayDate);
+
                                 load_image(reader["MemberID"].ToString());
 
                                 MemberID.Inlines.Add(new Run("Member ID: ") { FontWeight = FontWeights.Bold });
@@ -89,7 +98,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                 AddressState.Inlines.Add(new Run(reader["MemberAddressState"].ToString()) { FontWeight = FontWeights.Regular });
 
                                 MemberValid.Inlines.Add(new Run("Membership Valid: ") { FontWeight = FontWeights.Bold });
-                                MemberValid.Inlines.Add(new Run(reader["MemberValid"].ToString()) { FontWeight = FontWeights.Regular });
+                                MemberValid.Inlines.Add(new Run((membership == true ? "valid" : "not valid")) { FontWeight = FontWeights.Regular });
                             }
                         }
                     }
@@ -111,7 +120,7 @@ namespace Book_Shop_Management_System.Pages.Profiles
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "select * from sales WHERE SaleMemberID=@param1";
+                        cmd.CommandText = "select * from sales INNER JOIN books ON books.BookID = sales.SaleBookID INNER JOIN employees ON employees.EmployeeID = sales.SaleEmployeeID WHERE SaleMemberID=@param1";
                         cmd.Parameters.AddWithValue("@param1", EID);
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -120,9 +129,8 @@ namespace Book_Shop_Management_System.Pages.Profiles
                                 Sales.Items.Add(new dSalesDataItem
                                 {
                                     SaleID = reader["SaleID"].ToString(),
-                                    SaleMemberID = reader["SaleMemberID"].ToString(),
-                                    SaleBookID = reader["SaleBookID"].ToString(),
-                                    SaleEmployeeID = reader["SaleEmployeeID"].ToString(),
+                                    SaleBookID = reader["BookName"].ToString(),
+                                    SaleEmployeeID = reader["EmployeeFullName"].ToString(),
                                     SaleQuantity = reader["SaleQuantity"].ToString(),
                                     SaleDate = reader["SaleDate"].ToString(),
                                 });

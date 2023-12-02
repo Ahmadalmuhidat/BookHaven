@@ -75,21 +75,13 @@
                             <Label Grid.Column="0" Content="Member Begin Date" FontWeight="Bold"/>
                             <DatePicker x:Name="MemberBeginDate" Grid.Column="1" Width="300"/>
                         </Grid>
-                        <Grid Margin="0, 10, 0, 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".40*"></ColumnDefinition>
-                                <ColumnDefinition Width=".60*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Member End Date" FontWeight="Bold"/>
-                            <DatePicker x:Name="MemberEndDate" Grid.Column="1" Width="300"/>
-                        </Grid>
                     <Grid Margin="0, 10, 0, 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width=".40*"></ColumnDefinition>
                             <ColumnDefinition Width=".60*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Member Valid" FontWeight="Bold"/>
-                        <TextBox x:Name="MemberValid" Grid.Column="1" Width="300"/>
+                        <Label Grid.Column="0" Content="Member End Date" FontWeight="Bold"/>
+                        <DatePicker x:Name="MemberEndDate" Grid.Column="1" Width="300"/>
                     </Grid>
                     <Button Content="submit" FontSize="15" Click="submit" Margin="0, 10, 0, 0"/>
                 </StackPanel>

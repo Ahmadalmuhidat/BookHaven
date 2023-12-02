@@ -151,9 +151,13 @@ namespace Book_Shop_Management_System.UserControls
                     };
                     if (DB.InsertData(query, values))
                     {
-                        MessageBox.Show("Total: " + Total);
-                        MessageBox.Show("Data inserted successfully!");
-                        clearInputs();
+                        query = "UPDATE books SET BookQuantity=BookQuantity - " + SaleQuantity.Text + " WHERE BOOKID=" + SaleBook.SelectedValue.ToString();
+                        if (DB.UpdateData(query))
+                        {
+                            MessageBox.Show("Total: " + Total);
+                            MessageBox.Show("Data inserted successfully!");
+                            clearInputs();
+                        }
                     }
                     else
                     {

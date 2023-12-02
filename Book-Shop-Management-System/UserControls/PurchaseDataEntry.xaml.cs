@@ -117,8 +117,12 @@ namespace Book_Shop_Management_System.UserControls
 
                     if (DB.InsertData(query, values))
                     {
-                        MessageBox.Show("Data inserted successfully!");
-                        clearInputs();
+                        query = "UPDATE books SET BookQuantity=BookQuantity + " + PurchaseQuantity.Text + " WHERE BookID=" + PurchaseBookID.SelectedValue.ToString();
+                        if (DB.UpdateData(query))
+                        {
+                            MessageBox.Show("Data inserted successfully!");
+                            clearInputs();
+                        }
                     }
                     else
                     {

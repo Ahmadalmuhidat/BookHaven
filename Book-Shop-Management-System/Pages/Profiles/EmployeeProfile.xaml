@@ -73,11 +73,6 @@
                            Width="*"
                            Binding="{Binding SaleBookID}"/>
                         <DataGridTextColumn
-                           Header="Employee ID"
-                           MinWidth="150"
-                           Width="*"
-                           Binding="{Binding SaleEmployeeID}"/>
-                        <DataGridTextColumn
                            Header="Quantiy"
                            MinWidth="150"
                            Width="*"

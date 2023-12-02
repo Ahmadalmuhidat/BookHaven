@@ -1,11 +1,15 @@
 ﻿using Book_Shop_Management_System.DB;
 using Book_Shop_Management_System.Pages.Profiles;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using static Book_Shop_Management_System.Pages.BooksDatabase;
 
 namespace Book_Shop_Management_System.Pages
 {
@@ -33,6 +37,54 @@ namespace Book_Shop_Management_System.Pages
         {
             InitializeComponent();
             getEmployees();
+        }
+
+        public void search(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                String searchQuery = search_input.Text;
+                String query = "SELECT * FROM employees WHERE EmployeeID > 0 AND EmployeeFullName LIKE '%" + searchQuery + "%'";
+
+                using (var reader = DB.FetchData(query))
+                {
+                    if (reader.Rows.Count > 0)
+                    {
+                        Employees.Items.Clear();
+
+                        foreach (DataRow row in reader.Rows)
+                        {
+                            Employees.Items.Add(new EmployeesDataItem
+                            {
+                                EmployeeID = row["EmployeeID"].ToString(),
+                                EmployeeFullName = row["EmployeeFullName"].ToString(),
+                                EmployeeAdressLine1 = row["EmployeeAdressLine1"].ToString(),
+                                EmployeeAdressLine2 = row["EmployeeAdressLine2"].ToString(),
+                                EmployeeAdressCity = row["EmployeeAdressCity"].ToString(),
+                                EmployeeAdressState = row["EmployeeAdressState"].ToString(),
+                                EmployeePhoneNumber = row["EmployeePhoneNumber"].ToString(),
+                                EmployeeDateOfJoining = row["EmployeeDateOfJoining"].ToString(),
+                                EmployeeSalary = row["EmployeeSalary"].ToString(),
+                                EmployeeMGRStatus = row["EmployeeMGRStatus"].ToString(),
+                                ButtonEmployeeID = row["EmployeeID"].ToString()
+                            });
+                        }
+                    }
+                    else if (string.IsNullOrWhiteSpace(searchQuery))
+                    {
+                        Employees.Items.Clear();
+                        getEmployees();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sorry, employee has not been found!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         public void getEmployees()
@@ -82,39 +134,43 @@ namespace Book_Shop_Management_System.Pages
         {
             try
             {
-                EmployeesDataItem classObj = Employees.SelectedItem as EmployeesDataItem;
-                String id = classObj.EmployeeID;
-                String[] values = { id };
-                String query = "DELETE FROM employees WHERE EmployeeID=" + id;
+                List<EmployeesDataItem> selectedEmployees = Employees.SelectedItems.Cast<EmployeesDataItem>().ToList();
 
-                if (DB.DeleteData(query))
+                foreach (EmployeesDataItem classObj in selectedEmployees)
                 {
-                    string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                    string DistinationFolder = RootPath + "/Assets/Employees Images/" + id + ".png";
+                    String id = classObj.EmployeeID;
+                    String query = "DELETE FROM employees WHERE EmployeeID=" + id;
 
-                    if (File.Exists(DistinationFolder))
+                    if (DB.DeleteData(query))
                     {
-                        File.Delete(DistinationFolder);
-                        Console.WriteLine("File deleted successfully.");
+                        string RootPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                        string DistinationFolder = RootPath + "/Assets/Employees Images/" + id + ".png";
+
+                        if (File.Exists(DistinationFolder))
+                        {
+                            File.Delete(DistinationFolder);
+                            Console.WriteLine("File deleted successfully for EmployeeID: " + id);
+                        }
+                        else
+                        {
+                            Console.WriteLine("File not found for EmployeeID: " + id);
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("File not found.");
+                        Console.WriteLine("No rows were deleted for EmployeeID: " + id);
                     }
+                }
 
-                    MessageBox.Show("Data has beem deleted successfully!");
-                    Employees.Items.Clear();
-                    getEmployees();
-                }
-                else
-                {
-                    MessageBox.Show("No rows were deleted. Check your data or database.");
-                }
+                MessageBox.Show("Data has been deleted successfully!");
+                Employees.Items.Clear();
+                getEmployees(); // Refresh or update your employee list after deletion
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
     }
 }
