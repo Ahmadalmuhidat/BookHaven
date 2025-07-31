@@ -1,59 +1,89 @@
 ﻿<UserControl x:Class="Book_Shop_Management_System.UserControls.SaleDataEntry"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Book_Shop_Management_System.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="800">
+
     <Grid>
-        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 0, 0 10">
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock Text="New Sale Entry" TextAlignment="Center" FontWeight="Bold" FontSize="15"/>
-                <StackPanel Margin="0, 10, 0, 0" Orientation="Vertical">
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".40*"></ColumnDefinition>
-                            <ColumnDefinition Width=".60*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Sale Member" FontWeight="Bold"/>
-                        <ComboBox x:Name="SaleMember" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
-                    </Grid>
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".40*"></ColumnDefinition>
-                            <ColumnDefinition Width=".60*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Sale Book" FontWeight="Bold"/>
-                        <ComboBox x:Name="SaleBook" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
-                    </Grid>
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".40*"></ColumnDefinition>
-                            <ColumnDefinition Width=".60*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Sale Quantity" FontWeight="Bold"/>
-                        <TextBox x:Name="SaleQuantity" Grid.Column="1" Width="300"/>
-                    </Grid>
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".40*"></ColumnDefinition>
-                            <ColumnDefinition Width=".60*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Sale Employee" FontWeight="Bold"/>
-                        <ComboBox x:Name="SaleEmployee" Grid.Column="1" Width="300" DisplayMemberPath="DisplayText" SelectedValuePath="Value" SelectedIndex="0"/>
-                    </Grid>
-                    <Grid Margin="0, 10, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".40*"></ColumnDefinition>
-                            <ColumnDefinition Width=".60*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Sale Date" FontWeight="Bold"/>
-                        <DatePicker x:Name="SaleDate" Grid.Column="1" Width="300"/>
-                    </Grid>
-                    <Button Content="submit" FontSize="15" Click="submit" Margin="0, 10, 0, 0"/>
-                </StackPanel>
+        <StackPanel Margin="10">
+
+            <TextBlock Text="Sales Entry" FontWeight="Bold" FontSize="18" Margin="0,0,0,10" TextAlignment="Center" />
+
+            <!-- Dynamic sale entries -->
+            <ItemsControl x:Name="SaleEntriesPanel" ItemsSource="{Binding SaleEntries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Gray" Padding="10" Margin="0,0,0,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Book:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Width="180"
+                              ItemsSource="{Binding DataContext.Books, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              DisplayMemberPath="DisplayText"
+                              SelectedValuePath="Value"
+                              SelectedItem="{Binding Book, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="IsEnabled" Value="True" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Value}" Value="">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Quantity:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Width="180" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Employee:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" Width="180"
+                              ItemsSource="{Binding DataContext.Employees, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              DisplayMemberPath="DisplayText"
+                              SelectedValuePath="Value"
+                              SelectedItem="{Binding Employee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="IsEnabled" Value="True" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Value}" Value="">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+
+                                <!-- Remove Button: Classic style, vertically centered -->
+                                <Button Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Width="75"
+        HorizontalAlignment="Right" Margin="0,0,10,0"
+        VerticalAlignment="Center" Padding="5,2"
+        Content="Remove" Click="RemoveRow"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="Add Another Book" Click="AddRow" Margin="0,0,10,0"/>
+                <Button Content="Submit Sale" Click="SubmitSale"/>
             </StackPanel>
-        </Border>
+
+        </StackPanel>
     </Grid>
 </UserControl>

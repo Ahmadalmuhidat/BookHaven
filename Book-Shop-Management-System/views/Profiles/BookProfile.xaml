@@ -1,0 +1,64 @@
+﻿<Page x:Class="Book_Shop_Management_System.Pages.Profiles.BookProfile"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Book_Shop_Management_System.Pages.Profiles"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BookProfile">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" BorderBrush="Gray" Background="#f0f0f0" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="Book Details" FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+        </Border>
+
+        <!-- Book Info Section -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Book Image -->
+            <Border BorderBrush="Gray" Background="#f9f9f9" BorderThickness="1" Padding="5">
+                <Image Name="BookImage" Width="220" Height="300" Stretch="UniformToFill" />
+            </Border>
+
+            <!-- Book Details -->
+            <StackPanel Grid.Column="1" Margin="15,0,0,0" VerticalAlignment="Top" >
+                <TextBlock x:Name="BookID" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <TextBlock x:Name="BookName" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <TextBlock x:Name="BookAuthor" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <TextBlock x:Name="BookPrice" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" />
+                <TextBlock x:Name="BookQuantity" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,5" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Previous Purchases Header -->
+        <Border Grid.Row="2" BorderBrush="Gray" Background="#f0f0f0" BorderThickness="1" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="Previous Purchases" FontSize="20" FontWeight="Bold" TextAlignment="Center" />
+        </Border>
+
+        <!-- Purchases DataGrid -->
+        <DataGrid Grid.Row="3" x:Name="Purchases" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                  HeadersVisibility="Column" RowHeight="30" Margin="0" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Purchase ID" Binding="{Binding PurchaseID}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="Supplier" Binding="{Binding PurchaseSupplierID}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding PurchaseQuantity}" MinWidth="80" Width="*" />
+                <DataGridTextColumn Header="Purchase Date" Binding="{Binding PurchaseDate}" MinWidth="120" Width="*" />
+                <DataGridTextColumn Header="ETA" Binding="{Binding PurchaseETA}" MinWidth="120" Width="*" />
+                <DataGridTextColumn Header="Received" Binding="{Binding PurchaseReceived}" MinWidth="80" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

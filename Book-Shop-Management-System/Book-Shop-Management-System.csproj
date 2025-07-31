@@ -9,12 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Assets\Members Images\**" />
+    <EmbeddedResource Remove="Assets\Members Images\**" />
+    <None Remove="Assets\Members Images\**" />
+    <Page Remove="Assets\Members Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Assets\Employees Images\" />
-    <Folder Include="Assets\Members Images\" />
     <Folder Include="Assets\Books Images\" />
     <Folder Include="Assets\Suppliers Images\" />
   </ItemGroup>

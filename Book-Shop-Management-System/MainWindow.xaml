@@ -5,28 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Book_Shop_Management_System"
         mc:Ignorable="d"
+        Title="Book Haven - Management System"
+        WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         ResizeMode="CanMinimize"
-        Title="MainWindow" Height="450" Width="800">
+        FontFamily="Segoe UI"
+        Background="#FFF9F9F9">
 
-    <ScrollViewer>
-        <Grid Margin="20, 0, 20, 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height=".03*"></RowDefinition>
-                <RowDefinition Height=".97*"></RowDefinition>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Menu x:Name="navbar" Grid.Row="0">
-                <MenuItem x:Name="books_database_button" Header="Books" Click="switch_page"/>
-                <MenuItem x:Name="suppliers_database_button" Header="Suppliers" Click="switch_page"/>
-                <MenuItem x:Name="purchases_database_button" Header="Purchases" Click="switch_page"/>
-                <MenuItem x:Name="employees_database_button" Header="Employees" Click="switch_page"/>
-                <MenuItem x:Name="members_database_button" Header="Members" Click="switch_page"/>
-                <MenuItem x:Name="sales_database_button" Header="Sales" Click="switch_page"/>
-                <MenuItem x:Name="data_entry_button" Header="Data Entry" Click="switch_page"/>
-            </Menu>
+        <!-- Navigation Menu -->
+        <Menu x:Name="navbar" Grid.Row="0" Background="#FFEEEEEE" FontWeight="Bold">
+            <MenuItem x:Name="books_database_button" Header="Books" Click="switch_page"/>
+            <MenuItem x:Name="suppliers_database_button" Header="Suppliers" Click="switch_page"/>
+            <MenuItem x:Name="purchases_database_button" Header="Purchases" Click="switch_page"/>
+            <MenuItem x:Name="employees_database_button" Header="Employees" Click="switch_page"/>
+            <MenuItem x:Name="sales_database_button" Header="Sales" Click="switch_page"/>
+            <MenuItem x:Name="data_entry_button" Header="Data Entry" Click="switch_page"/>
+        </Menu>
 
-            <Frame Grid.Row="1" Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
-        </Grid>
-    </ScrollViewer>
+        <!-- Main Content Frame -->
+        <Frame x:Name="ContentFrame"
+               Grid.Row="1"
+               NavigationUIVisibility="Hidden"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
+               Background="White"/>
+    </Grid>
 </Window>
