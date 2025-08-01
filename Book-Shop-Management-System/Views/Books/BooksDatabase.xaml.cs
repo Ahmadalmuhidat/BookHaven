@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -30,10 +29,10 @@ namespace Book_Shop_Management_System.Pages
         public BooksDatabase()
         {
             InitializeComponent();
-            getBooks();
+            GetBooks();
         }
 
-        public void search(object sender, RoutedEventArgs e)
+        public void Search(object sender, RoutedEventArgs e)
         {
             String searchQuery = search_input.Text;
             String query = "SELECT * FROM books WHERE Name LIKE '%" + searchQuery + "%'";
@@ -63,7 +62,7 @@ namespace Book_Shop_Management_System.Pages
                     else if (string.IsNullOrWhiteSpace(searchQuery))
                     {
                         books_table.Items.Clear();
-                        getBooks();
+                        GetBooks();
                     }
                     else
                     {
@@ -77,7 +76,7 @@ namespace Book_Shop_Management_System.Pages
             }
         }
 
-        public void getBooks()
+        public void GetBooks()
         {
             try
             {
@@ -105,7 +104,7 @@ namespace Book_Shop_Management_System.Pages
             }
         }
 
-        private void goToBookProfile(object sender, RoutedEventArgs e)
+        private void GoToBookProfile(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             if (button.CommandParameter != null)
@@ -116,7 +115,7 @@ namespace Book_Shop_Management_System.Pages
             }
         }
 
-        private void delete(object sender, RoutedEventArgs e)
+        private void Delete(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -150,7 +149,7 @@ namespace Book_Shop_Management_System.Pages
 
                 MessageBox.Show("Data has been deleted successfully!");
                 books_table.Items.Clear();
-                getBooks();
+                GetBooks();
             }
             catch (Exception ex)
             {

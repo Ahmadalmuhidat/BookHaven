@@ -29,11 +29,11 @@
               Content="Search"
               Width="100" Height="30"
               Margin="0,0,10,0"
-              Click="search"/>
+              Click="Search"/>
             <Button x:Name="delete_button"
               Content="Delete Selected"
               Width="120" Height="30"
-              Click="delete"/>
+              Click="Delete"/>
         </StackPanel>
 
 
@@ -60,7 +60,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="View" 
-                      Click="goToBookProfile" 
+                      Click="GoToBookProfile" 
                       CommandParameter="{Binding ButtonBookID}" 
                       Padding="4,2"/>
                         </DataTemplate>

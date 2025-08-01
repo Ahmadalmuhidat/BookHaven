@@ -1,11 +1,12 @@
 ﻿using Book_Shop_Management_System.Configrations;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using MySql.Data.MySqlClient;
+using System.Net;
 
 namespace Book_Shop_Management_System.Pages
 {
@@ -98,6 +99,100 @@ namespace Book_Shop_Management_System.Pages
                     Date = row["Date"].ToString(),
                     Total = row["Total"].ToString()
                 });
+            }
+        }
+
+        private void GenerateInvoice(object sender, RoutedEventArgs e)
+        {
+            if (Sales.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a sale to generate the invoice.");
+                return;
+            }
+
+            var selectedSale = (SalesDataItem)Sales.SelectedItem;
+
+            string saleInfoQuery = "SELECT ID, Date, Total FROM sales WHERE ID = @saleID";
+            var saleInfoParams = new MySqlParameter[]
+            {
+                new MySqlParameter("@saleID", selectedSale.ID)
+            };
+
+            try
+            {
+                using (var saleTable = db.FetchData(saleInfoQuery, saleInfoParams))
+                {
+                    if (saleTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Sale not found.");
+                        return;
+                    }
+
+                    var saleRow = saleTable.Rows[0];
+                    string saleId = saleRow["ID"].ToString();
+                    string saleDate = Convert.ToDateTime(saleRow["Date"]).ToShortDateString();
+                    string saleTotal = saleRow["Total"].ToString();
+
+                    // Now get all sale items for that sale
+                    string itemQuery = @"
+                        SELECT 
+                          b.Name AS BookName,
+                          b.Author,
+                          si.Quantity,
+                          si.UnitPrice
+                        FROM sale_items si
+                        INNER JOIN books b ON b.ID = si.Book
+                        WHERE si.Sale = @saleID
+                    ";
+
+                    using (var itemTable = db.FetchData(itemQuery, saleInfoParams))
+                    {
+                        if (itemTable.Rows.Count == 0)
+                        {
+                            MessageBox.Show("No items found for this sale.");
+                            return;
+                        }
+
+                        string invoiceText = $"===== INVOICE =====\n" +
+                                             $"Sale ID: {saleId}\n" +
+                                             $"Date: {saleDate}\n" +
+                                             $"===============================\n";
+
+                        foreach (DataRow item in itemTable.Rows)
+                        {
+                            string book = item["BookName"].ToString();
+                            int qty = Convert.ToInt32(item["Quantity"]);
+
+                            invoiceText += $"{qty,5}  {book,-40}\n";
+                        }
+
+                        invoiceText += "-------------------------------\n" +
+                                       $"Total Amount: {saleTotal} USD\n" +
+                                       "===============================\n" +
+                                       "Thank you for your purchase!";
+
+                        MessageBox.Show(invoiceText, "Invoice");
+
+                        string fileName = $"Invoice_{saleId}.txt";
+                        string rootPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName
+                                          ?? throw new DirectoryNotFoundException("Could not resolve root path.");
+
+                        string invoiceDir = Path.Combine(rootPath, "Invoices");
+
+                        if (!Directory.Exists(invoiceDir))
+                        {
+                            Directory.CreateDirectory(invoiceDir);
+                        }
+
+                        string destinationPath = Path.Combine(invoiceDir, fileName);
+                        File.WriteAllText(destinationPath, invoiceText);
+                        MessageBox.Show($"Invoice saved to:\n{destinationPath}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to generate invoice:\n" + ex.Message);
             }
         }
 

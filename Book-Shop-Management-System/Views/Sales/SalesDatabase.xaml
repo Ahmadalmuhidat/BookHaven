@@ -49,6 +49,16 @@
                 <DataGridTextColumn Header="Sale ID" Binding="{Binding ID}" MinWidth="80"/>
                 <DataGridTextColumn Header="Sale Date" Binding="{Binding Date}" MinWidth="150"/>
                 <DataGridTextColumn Header="Sale Total" Binding="{Binding Total}" MinWidth="100"/>
+                <DataGridTemplateColumn Header="Actions" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Generate Invoice" 
+                                Click="GenerateInvoice" 
+                                CommandParameter="{Binding ButtonBookID}" 
+                                Padding="4,2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
