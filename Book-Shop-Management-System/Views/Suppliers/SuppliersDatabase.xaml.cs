@@ -130,8 +130,8 @@ namespace Book_Shop_Management_System.Pages
                     const string deleteQuery = "DELETE FROM suppliers WHERE ID = @id";
 
                     MySqlParameter[] sqlParams = {
-                new MySqlParameter("@id", supplier.SupplierID)
-            };
+                        new MySqlParameter("@id", supplier.SupplierID)
+                    };
 
                     if (_db.DeleteData(deleteQuery, sqlParams))
                     {

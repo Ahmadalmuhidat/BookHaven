@@ -45,7 +45,8 @@ namespace Book_Shop_Management_System.Pages
                 INNER JOIN books ON books.ID = purchases.Book
                 INNER JOIN suppliers ON suppliers.ID = purchases.Supplier
                 WHERE books.Name LIKE @searchTerm 
-                   OR suppliers.FullName LIKE @searchTerm;";
+                OR suppliers.FullName LIKE @searchTerm;
+            ";
 
             var parameters = new MySqlParameter[]
             {
@@ -60,8 +61,8 @@ namespace Book_Shop_Management_System.Pages
             string query = @"
                 SELECT * FROM purchases
                 INNER JOIN books ON books.ID = purchases.Book
-                INNER JOIN suppliers ON suppliers.ID = purchases.Supplier;";
-
+                INNER JOIN suppliers ON suppliers.ID = purchases.Supplier;
+            ";
             PopulatePurchaseList(query);
         }
 
@@ -132,7 +133,7 @@ namespace Book_Shop_Management_System.Pages
                 }
 
                 MessageBox.Show("Selected purchases deleted successfully.");
-                LoadAllPurchases(); // Refresh data
+                LoadAllPurchases();
             }
             catch (Exception ex)
             {

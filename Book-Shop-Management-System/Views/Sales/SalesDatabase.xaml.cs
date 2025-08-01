@@ -38,14 +38,15 @@ namespace Book_Shop_Management_System.Pages
             }
 
             string query = @"
-        SELECT sales.ID, sales.Date, sales.Total 
-        FROM sales 
-        INNER JOIN books ON books.ID = sales.Book 
-        WHERE books.Name LIKE @searchTerm OR books.FullName LIKE @searchTerm";
+                SELECT sales.ID, sales.Date, sales.Total 
+                FROM sales 
+                INNER JOIN books ON books.ID = sales.Book 
+                WHERE books.Name LIKE @searchTerm OR books.FullName LIKE @searchTerm
+            ";
 
             var parameters = new MySqlParameter[]
             {
-        new MySqlParameter("@searchTerm", "%" + searchTerm + "%")
+                new MySqlParameter("@searchTerm", "%" + searchTerm + "%")
             };
 
             try
@@ -117,7 +118,7 @@ namespace Book_Shop_Management_System.Pages
                     string query = "DELETE FROM sales WHERE ID = @id";
                     var parameters = new MySqlParameter[]
                     {
-            new MySqlParameter("@id", sale.ID)
+                        new MySqlParameter("@id", sale.ID)
                     };
 
                     if (db.DeleteData(query, parameters))
@@ -129,7 +130,6 @@ namespace Book_Shop_Management_System.Pages
                         Console.WriteLine("No rows deleted for sale ID: " + sale.ID);
                     }
                 }
-
                 MessageBox.Show("Selected sales deleted successfully.");
                 GetSales();
             }

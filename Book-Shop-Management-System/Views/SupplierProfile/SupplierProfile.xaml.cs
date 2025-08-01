@@ -59,7 +59,8 @@ namespace Book_Shop_Management_System.Pages.Profiles
                 SELECT purchases.ID, books.Name, purchases.Quantity, purchases.Date, purchases.ETA, purchases.Received
                 FROM purchases
                 INNER JOIN books ON books.ID = purchases.Book
-                WHERE purchases.Supplier = @SupplierId";
+                WHERE purchases.Supplier = @SupplierId
+            ";
 
             try
             {

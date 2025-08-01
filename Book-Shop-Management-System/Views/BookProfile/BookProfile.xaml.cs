@@ -53,18 +53,19 @@ namespace Book_Shop_Management_System.Pages.Profiles
             try
             {
                 const string query = @"
-          SELECT 
-            purchases.ID, 
-            suppliers.FullName, 
-            purchases.Quantity, 
-            purchases.Date, 
-            purchases.ETA, 
-            purchases.Received 
-          FROM purchases
-          INNER JOIN books ON books.ID = purchases.Book
-          INNER JOIN suppliers ON suppliers.ID = purchases.Supplier
-          WHERE purchases.Book = @param1;
-        ";
+                    SELECT 
+                        purchases.ID, 
+                        suppliers.FullName, 
+                        purchases.Quantity, 
+                        purchases.Date, 
+                        purchases.ETA, 
+                        purchases.Received 
+                    FROM purchases
+                        INNER JOIN books ON books.ID = purchases.Book
+                        INNER JOIN suppliers ON suppliers.ID = purchases.Supplier
+                    WHERE
+                        purchases.Book = @param1;
+                ";
 
                 using var results = _db.FetchData(query, new MySqlParameter("@param1", bookId));
                 Purchases.Items.Clear();

@@ -24,24 +24,21 @@ namespace Book_Shop_Management_System.UserControls
             get { return (SaleComboBoxItem)GetValue(BookProperty); }
             set { SetValue(BookProperty, value); }
         }
-        public static readonly DependencyProperty BookProperty =
-            DependencyProperty.Register("Book", typeof(SaleComboBoxItem), typeof(SaleEntryRow), new PropertyMetadata(null));
+        public static readonly DependencyProperty BookProperty = DependencyProperty.Register("Book", typeof(SaleComboBoxItem), typeof(SaleEntryRow), new PropertyMetadata(null));
 
         public string Quantity
         {
             get { return (string)GetValue(QuantityProperty); }
             set { SetValue(QuantityProperty, value); }
         }
-        public static readonly DependencyProperty QuantityProperty =
-            DependencyProperty.Register("Quantity", typeof(string), typeof(SaleEntryRow), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty QuantityProperty = DependencyProperty.Register("Quantity", typeof(string), typeof(SaleEntryRow), new PropertyMetadata(string.Empty));
 
         public SaleComboBoxItem Employee
         {
             get { return (SaleComboBoxItem)GetValue(EmployeeProperty); }
             set { SetValue(EmployeeProperty, value); }
         }
-        public static readonly DependencyProperty EmployeeProperty =
-            DependencyProperty.Register("Employee", typeof(SaleComboBoxItem), typeof(SaleEntryRow), new PropertyMetadata(null));
+        public static readonly DependencyProperty EmployeeProperty = DependencyProperty.Register("Employee", typeof(SaleComboBoxItem), typeof(SaleEntryRow), new PropertyMetadata(null));
     }
 
     public partial class SaleDataEntry : UserControl
