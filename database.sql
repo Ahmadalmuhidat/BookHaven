@@ -21,7 +21,7 @@ CREATE TABLE suppliers (
     FullName VARCHAR(200),
     PhoneNumber VARCHAR(200),
     AddressLine1 VARCHAR(200),
-    rAddressLine2 VARCHAR(200),
+    AddressLine2 VARCHAR(200),
     City VARCHAR(200),
     State VARCHAR(200),
     CreateDate DATE,
@@ -41,27 +41,20 @@ CREATE TABLE purchases (
     FOREIGN KEY (Supplier) REFERENCES suppliers(ID)
 );
 
--- Create the employees table
-CREATE TABLE employees (
-    ID VARCHAR(200) PRIMARY KEY,
-    FullName VARCHAR(200),
-    PhoneNumber VARCHAR(200),
-    AddressLine1 VARCHAR(200),
-    AddressLine2 VARCHAR(200),
-    City VARCHAR(200),
-    State VARCHAR(200),
-    HireDate DATE,
-    ImagePath VARCHAR(200)
-);
-
 -- Create the sales table
 CREATE TABLE sales (
     ID VARCHAR(200) PRIMARY KEY,
-    Book VARCHAR(200),
-    Employee VARCHAR(200),
-    Quantity INT,
     Date DATE,
-    Total INT,
-    FOREIGN KEY (Book) REFERENCES books(ID),
-    FOREIGN KEY (Employee) REFERENCES employees(ID)
+    Total INT
+);
+
+-- Create the items table
+CREATE TABLE sale_items (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  Sale VARCHAR(36),
+  Book VARCHAR(200),
+  Quantity INT,
+  UnitPrice DECIMAL(10, 2),
+  FOREIGN KEY (Sale) REFERENCES sales(ID),
+  FOREIGN KEY (Book) REFERENCES books(ID)
 );

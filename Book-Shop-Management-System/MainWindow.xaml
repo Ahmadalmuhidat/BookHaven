@@ -23,7 +23,6 @@
             <MenuItem x:Name="books_database_button" Header="Books" Click="switch_page"/>
             <MenuItem x:Name="suppliers_database_button" Header="Suppliers" Click="switch_page"/>
             <MenuItem x:Name="purchases_database_button" Header="Purchases" Click="switch_page"/>
-            <MenuItem x:Name="employees_database_button" Header="Employees" Click="switch_page"/>
             <MenuItem x:Name="sales_database_button" Header="Sales" Click="switch_page"/>
             <MenuItem x:Name="data_entry_button" Header="Data Entry" Click="switch_page"/>
         </Menu>

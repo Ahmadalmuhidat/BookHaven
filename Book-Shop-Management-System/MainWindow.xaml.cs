@@ -30,8 +30,6 @@ namespace Book_Shop_Management_System
             books_database_button.IsChecked = false;
             suppliers_database_button.IsChecked = false;
             purchases_database_button.IsChecked = false;
-            employees_database_button.IsChecked = false;
-            members_database_button.IsChecked = false;
             sales_database_button.IsChecked = false;
             data_entry_button.IsChecked = false;
 
@@ -48,14 +46,6 @@ namespace Book_Shop_Management_System
             else if (menuItem == purchases_database_button)
             {
                 ContentFrame.Content = new PurchasesDatabase();
-            }
-            else if (menuItem == employees_database_button)
-            {
-                ContentFrame.Content = new EmployeesDatabase();
-            }
-            else if (menuItem == members_database_button)
-            {
-                ContentFrame.Content = new MembersDatabase();
             }
             else if (menuItem == sales_database_button)
             {

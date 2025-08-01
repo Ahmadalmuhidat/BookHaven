@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Book_Shop_Management_System.UserControls.SaleDataEntry"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Book_Shop_Management_System.UserControls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="800">
+
+    <Grid>
+        <StackPanel Margin="10">
+
+            <TextBlock Text="Sales Entry" FontWeight="Bold" FontSize="18" Margin="0,0,0,10" TextAlignment="Center" />
+
+            <!-- Dynamic sale entries -->
+            <ItemsControl x:Name="SaleEntriesPanel" ItemsSource="{Binding SaleEntries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Gray" Padding="10" Margin="0,0,0,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Book:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Width="180"
+                                      ItemsSource="{Binding DataContext.Books, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      DisplayMemberPath="DisplayText"
+                                      SelectedValuePath="Value"
+                                      SelectedItem="{Binding Book, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="IsEnabled" Value="True" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Value}" Value="">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Quantity:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Width="180" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <!-- Remove Button: Classic style, vertically centered -->
+                                <Button Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Width="75"
+                                    HorizontalAlignment="Right" Margin="0,0,10,0"
+                                    VerticalAlignment="Center" Padding="5,2"
+                                    Content="Remove" Click="RemoveRow"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="Add Another Book" Click="AddRow" Margin="0,0,10,0"/>
+                <Button Content="Submit Sale" Click="SubmitSale"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>
